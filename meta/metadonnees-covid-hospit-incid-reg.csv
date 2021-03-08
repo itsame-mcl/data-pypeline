@@ -1,0 +1,5 @@
+﻿Colonne;Type;Description_FR;Description_EN;Exemple
+jour;string($date);Date de notification;Date of notice;19/03/2020
+nomReg;string;Nom de la région;Region name;Bretagne
+numReg;integer;Numéro de la région;Region number;53
+incid_rea;integer;Nombre de nouveaux patients admis en réanimation dans les 24 dernières heures;Number of new intensive care admissions in the last 24 hours;1
