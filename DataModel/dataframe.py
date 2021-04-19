@@ -23,15 +23,22 @@ class DataFrame:
                 raise OverflowError
         elif isinstance(item, tuple):
             if len(item) == 1:
-                if 0 <= item[0] < len(self.__columns):
-                    return self.__data[self.__columns[item[0]]]
-                else:
-                    raise OverflowError
+                if isinstance(item[0], str):
+                    if item[0] in self.__columns:
+                        return self.__data[item[0]]
+                    else:
+                        raise ValueError
+                elif isinstance(item[0], int):
+                    if 0 <= item[0] < len(self.__columns):
+                        return self.__data[self.__columns[item[0]]]
+                    else:
+                        raise OverflowError
             elif len(item) == 2:
                 if (item[0] is not None) and (item[1] is not None):
                     if isinstance(item[1], int):
                         if isinstance(item[0], int):
-                            if (0 <= item[0] < len(self.__columns)) and (0 <= item[1] < len(self.__data[self.__columns[0]])):
+                            if (0 <= item[0] < len(self.__columns)) and \
+                                    (0 <= item[1] < len(self.__data[self.__columns[0]])):
                                 return self.__data[self.__columns[item[0]]][item[1]]
                             else:
                                 raise OverflowError
@@ -46,7 +53,7 @@ class DataFrame:
                         raise TypeError
                 elif (item[0] is not None) and (item[1] is None):
                     if isinstance(item[0], int):
-                        if (0 <= item[0] < len(self.__columns)):
+                        if 0 <= item[0] < len(self.__columns):
                             return self.__data[self.__columns[item[0]]]
                         else:
                             raise OverflowError
@@ -71,8 +78,8 @@ class DataFrame:
                 raise ValueError
 
     def __setitem__(self, key, value):
-        if isinstance(key,str):
-            if isinstance(value,list):
+        if isinstance(key, str):
+            if isinstance(value, list):
                 if key in self.__columns:
                     if len(self.__data[key]) == len(value):
                         self.__data[key] = value
@@ -82,7 +89,87 @@ class DataFrame:
                     raise ValueError
             else:
                 raise TypeError
-
-test = {"entiers":[1,2,3],"carres":[1,4,9],"cubes":[1,8,27]}
-df = DataFrame(test)
-print(df['cubes'])
+        elif isinstance(key, int):
+            if isinstance(value, list):
+                if 0 <= key < len(self.__columns):
+                    self.__data[self.__columns[key]] = value
+                else:
+                    raise OverflowError
+            else:
+                raise ValueError
+        elif isinstance(key, tuple):
+            if len(key) == 1:
+                if isinstance(key[0], str):
+                    if isinstance(value, list):
+                        if key[0] in self.__columns:
+                            if len(self.__data[key[0]]) == len(value):
+                                self.__data[key[0]] = value
+                            else:
+                                raise OverflowError
+                        else:
+                            raise ValueError
+                    else:
+                        raise TypeError
+                elif isinstance(key[0], int):
+                    if isinstance(value, list):
+                        if 0 <= key[0] < len(self.__columns):
+                            self.__data[self.__columns[key[0]]] = value
+                        else:
+                            raise OverflowError
+                    else:
+                        raise ValueError
+            elif len(key) == 2:
+                if (key[0] is not None) and (key[1] is not None):
+                    if isinstance(key[1], int):
+                        if isinstance(key[0], int):
+                            if (0 <= key[0] < len(self.__columns)) and \
+                                    (0 <= key[1] < len(self.__data[self.__columns[0]])):
+                                self.__data[self.__columns[key[0]]][key[1]] = value
+                            else:
+                                raise OverflowError
+                        elif isinstance(key[0], str):
+                            if key[0] in self.__columns and (0 <= key[1] < len(self.__data[self.__columns[0]])):
+                                self.__data[key[0]][key[1]] = value
+                            else:
+                                raise OverflowError
+                        else:
+                            raise TypeError
+                    else:
+                        raise TypeError
+                elif (key[0] is not None) and (key[1] is None):
+                    if isinstance(value, list):
+                        if len(self.__data[self.__columns[0]]) == len(value):
+                            if isinstance(key[0], int):
+                                if 0 <= key[0] < len(self.__columns):
+                                    self.__data[self.__columns[key[0]]] = value
+                                else:
+                                    raise OverflowError
+                            elif isinstance(key[0], str):
+                                if key[0] in self.__columns:
+                                    self.__data[key[0]] = value
+                                else:
+                                    raise OverflowError
+                            else:
+                                raise TypeError
+                        else:
+                            raise ValueError
+                    else:
+                        raise TypeError
+                elif (key[0] is None) and (key[1] is not None):
+                    if isinstance(value, list):
+                        if len(self.__data[self.__columns[0]]) == len(value):
+                            if 0 <= key[1] < len(self.__data[self.__columns[0]]):
+                                for i in range(len(self.__columns)):
+                                    self.__data[self.__columns[i]][key[1]] = value[i]
+                            else:
+                                return OverflowError
+                        else:
+                            raise ValueError
+                    else:
+                        raise TypeError
+                else:
+                    raise TypeError
+            else:
+                raise ValueError
+        else:
+            raise TypeError
