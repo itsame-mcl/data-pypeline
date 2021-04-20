@@ -24,6 +24,9 @@ class DataFrame:
                 if len(self.__data[key]) < len(self):
                     for _ in range(len(self)-len(self.__data[key])):
                         self.__data[key] = self.__data[key] + [None]
+                if not isinstance(key, str):
+                    self.__columns[self.__columns.index(key)] = str(key)
+                    self.__data[str(key)] = self.__data.pop(key)
         else:
             raise TypeError
 
