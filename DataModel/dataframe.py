@@ -250,3 +250,20 @@ class DataFrame:
                         raise TypeError
             else:
                 raise TypeError
+
+    def sup_column(self, name):
+        if isinstance(name, int):
+            if 0 <= name < len(self.__columns):
+                key = self.__columns[name]
+                self.__columns.remove(key)
+                del self.__data[key]
+            else:
+                raise IndexError
+        elif isinstance(name, str):
+            if name in self.__columns:
+                self.__columns.remove(name)
+                del self.__data[name]
+            else:
+                raise KeyError
+        else:
+            raise TypeError
