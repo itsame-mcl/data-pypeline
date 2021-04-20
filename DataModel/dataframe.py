@@ -1,3 +1,6 @@
+import os
+
+
 class DataFrame:
 
     def __init__(self, data=None):
@@ -13,6 +16,21 @@ class DataFrame:
                         self.__data[key] = self.__data[key] + [None]
         else:
             raise TypeError
+
+    def __str__(self):
+        display = "DataFrame ID#" + str(id(self))
+        display += os.linesep + "Shape : " + str(self.shape[0]) + " columns X " + str(self.shape[1]) + " lines"
+        lines = min(5, len(self))
+        if lines > 0:
+            display += os.linesep + os.linesep + "First " + str(lines) + " lines"
+            display += os.linesep + "============="
+            display += os.linesep + "\t" + "\t".join(self.__columns)
+            for i in range(lines):
+                row = []
+                for key in self.__columns:
+                    row.append(str(self.__data[key][i]))
+                display += os.linesep + str(i) + "\t" + "\t".join(row)
+        return display
 
     def __len__(self):
         length = 0
@@ -178,7 +196,7 @@ class DataFrame:
         if len(self.__columns) > 0:
             return len(self.__columns), len(self)
         else:
-            return 0
+            return 0, 0
 
     def add_column(self, name, content=None, after=None, before=None):
         if after is not None and before is not None:
