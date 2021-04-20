@@ -267,3 +267,13 @@ class DataFrame:
                 raise KeyError
         else:
             raise TypeError
+
+    def sup_row(self, index):
+        if isinstance(index, int):
+            if 0 <= index < len(self):
+                for key in self.__columns:
+                    del self.__data[key][index]
+            else:
+                raise IndexError
+        else:
+            raise TypeError
