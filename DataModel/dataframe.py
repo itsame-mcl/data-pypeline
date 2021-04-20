@@ -232,6 +232,10 @@ class DataFrame:
                     groups.append(result)
             return groups
 
+    @property
+    def groups_vars(self):
+        return self.__groups
+
     def add_column(self, name, content=None, after=None, before=None):
         if after is not None and before is not None:
             raise ValueError
