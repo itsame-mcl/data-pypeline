@@ -5,9 +5,11 @@ class DataFrame:
 
     def __init__(self, data=None):
         if data is None:
+            self.__groups = []
             self.__columns = []
             self.__data = {}
         elif isinstance(data, dict):
+            self.__groups = []
             self.__columns = list(data.keys())
             self.__data = data
             for key in self.__columns:
@@ -188,7 +190,7 @@ class DataFrame:
         return data_dict
 
     @property
-    def columns(self):
+    def vars(self):
         return self.__columns
 
     @property
