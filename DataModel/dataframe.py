@@ -19,10 +19,12 @@ class DataFrame:
             raise TypeError
 
     def __len__(self):
-        if len(self.__columns) > 0:
-            return len(self.__data[self.__columns[0]])
-        else:
-            return 0
+        length = 0
+        for key in self.__columns:
+            if self.__data.get(key) is not None:
+                if len(self.__data[key]) > length:
+                    length = len(self.__data[key])
+        return length
 
     def __getitem__(self, item):
         if isinstance(item, int):
@@ -171,6 +173,47 @@ class DataFrame:
     @property
     def shape(self):
         if len(self.__columns) > 0:
-            return len(self.__columns), len(self.__data[self.__columns[0]])
+            return len(self.__columns), len(self)
         else:
             return 0
+
+    def add_column(self, name, content=None, after=None, before=None):
+        if after is not None and before is not None:
+            raise ValueError
+        else:
+            if content is None or isinstance(content, list):
+                if after is None and before is None:
+                    self.__columns.append(str(name))
+                elif after is not None:
+                    if isinstance(after, int):
+                        self.__columns.insert(after+1, str(name))
+                    elif isinstance(after, str):
+                        if after in self.__columns:
+                            self.__columns.insert(self.__columns.index(after)+1, str(name))
+                        else:
+                            raise KeyError
+                    else:
+                        raise TypeError
+                else:
+                    if isinstance(before, int):
+                        self.__columns.insert(before, str(name))
+                    elif isinstance(before, str):
+                        if before in self.__columns:
+                            self.__columns.insert(self.__columns.index(before), str(name))
+                        else:
+                            raise KeyError
+                    else:
+                        raise TypeError
+                if content is None:
+                    content = []
+                if len(content) < len(self):
+                    for _ in range(len(self)-len(content)):
+                        content = content + [None]
+                elif len(content) > len(self):
+                    for key in self.__columns:
+                        if key != str(name):
+                            for _ in range(len(content)-len(self.__data[key])):
+                                self.__data[key] = self.__data[key] + [None]
+                self.__data[str(name)] = content
+            else:
+                raise TypeError
