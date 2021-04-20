@@ -18,6 +18,12 @@ class DataFrame:
         else:
             raise TypeError
 
+    def __len__(self):
+        if len(self.__columns) > 0:
+            return len(self.__data[self.__columns[0]])
+        else:
+            return 0
+
     def __getitem__(self, item):
         if isinstance(item, int):
             if 0 <= item < len(self.__columns):
@@ -157,3 +163,14 @@ class DataFrame:
                 raise ValueError
         else:
             raise TypeError
+
+    @property
+    def columns(self):
+        return self.__columns
+
+    @property
+    def shape(self):
+        if len(self.__columns) > 0:
+            return len(self.__columns), len(self.__data[self.__columns[0]])
+        else:
+            return 0
