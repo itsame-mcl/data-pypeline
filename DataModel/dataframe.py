@@ -217,3 +217,33 @@ class DataFrame:
                 self.__data[str(name)] = content
             else:
                 raise TypeError
+
+    def add_row(self, content=None, after=None, before=None):
+        if after is not None and before is not None:
+            raise ValueError
+        else:
+            if content is None or isinstance(content, list):
+                if content is None:
+                    content = []
+                if len(content) < len(self.__columns):
+                    for _ in range(len(self.__columns) - len(content)):
+                        content = content + [None]
+                elif len(content) > len(self.__columns):
+                    raise ValueError
+                if after is None and before is None:
+                    for i in range(len(self.__columns)):
+                        self.__data[self.__columns[i]] = self.__data[self.__columns[i]] + [content[i]]
+                elif after is not None:
+                    if isinstance(after, int):
+                        for i in range(len(self.__columns)):
+                            self.__data[self.__columns[i]].insert(after+1, content[i])
+                    else:
+                        raise TypeError
+                else:
+                    if isinstance(before, int):
+                        for i in range(len(self.__columns)):
+                            self.__data[self.__columns[i]].insert(before, content[i])
+                    else:
+                        raise TypeError
+            else:
+                raise TypeError
