@@ -307,45 +307,48 @@ class DataFrame:
         return self.__groups
 
     def add_column(self, name, content=None, after=None, before=None):
-        if after is not None and before is not None:
-            raise ValueError
-        else:
-            if content is None or isinstance(content, list):
-                if after is None and before is None:
-                    self.__columns.append(str(name))
-                elif after is not None:
-                    if isinstance(after, int):
-                        self.__columns.insert(after+1, str(name))
-                    elif isinstance(after, str):
-                        if after in self.__columns:
-                            self.__columns.insert(self.__columns.index(after)+1, str(name))
-                        else:
-                            raise KeyError
-                    else:
-                        raise TypeError
-                else:
-                    if isinstance(before, int):
-                        self.__columns.insert(before, str(name))
-                    elif isinstance(before, str):
-                        if before in self.__columns:
-                            self.__columns.insert(self.__columns.index(before), str(name))
-                        else:
-                            raise KeyError
-                    else:
-                        raise TypeError
-                if content is None:
-                    content = []
-                if len(content) < len(self):
-                    for _ in range(len(self)-len(content)):
-                        content = content + [None]
-                elif len(content) > len(self):
-                    for key in self.__columns:
-                        if key != str(name):
-                            for _ in range(len(content)-len(self.__data[key])):
-                                self.__data[key] = self.__data[key] + [None]
-                self.__data[str(name)] = content
+        if str(name) not in self.__columns:
+            if after is not None and before is not None:
+                raise ValueError
             else:
-                raise TypeError
+                if content is None or isinstance(content, list):
+                    if after is None and before is None:
+                        self.__columns.append(str(name))
+                    elif after is not None:
+                        if isinstance(after, int):
+                            self.__columns.insert(after+1, str(name))
+                        elif isinstance(after, str):
+                            if after in self.__columns:
+                                self.__columns.insert(self.__columns.index(after)+1, str(name))
+                            else:
+                                raise KeyError
+                        else:
+                            raise TypeError
+                    else:
+                        if isinstance(before, int):
+                            self.__columns.insert(before, str(name))
+                        elif isinstance(before, str):
+                            if before in self.__columns:
+                                self.__columns.insert(self.__columns.index(before), str(name))
+                            else:
+                                raise KeyError
+                        else:
+                            raise TypeError
+                    if content is None:
+                        content = []
+                    if len(content) < len(self):
+                        for _ in range(len(self)-len(content)):
+                            content = content + [None]
+                    elif len(content) > len(self):
+                        for key in self.__columns:
+                            if key != str(name):
+                                for _ in range(len(content)-len(self.__data[key])):
+                                    self.__data[key] = self.__data[key] + [None]
+                    self.__data[str(name)] = content
+                else:
+                    raise TypeError
+        else:
+            raise KeyError
 
     def add_row(self, content=None, after=None, before=None):
         if after is not None and before is not None:
