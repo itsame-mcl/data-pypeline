@@ -7,13 +7,9 @@ class DataFrame:
         elif isinstance(data, dict):
             self.__columns = list(data.keys())
             self.__data = data
-            row_length = 0
             for key in self.__columns:
-                if len(self.__data[key]) > row_length:
-                    row_length = len(self.__data[key])
-            for key in self.__columns:
-                if len(self.__data[key]) < row_length:
-                    for _ in range(row_length-len(self.__data[key])):
+                if len(self.__data[key]) < len(self):
+                    for _ in range(len(self)-len(self.__data[key])):
                         self.__data[key] = self.__data[key] + [None]
         else:
             raise TypeError
