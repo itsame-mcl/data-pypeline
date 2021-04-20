@@ -20,19 +20,29 @@ class DataFrame:
             raise TypeError
 
     def __str__(self):
+        groups = self.groups
         display = "DataFrame ID#" + str(id(self))
         display += os.linesep + "Shape : " + str(self.shape[0]) + " columns X " + str(self.shape[1]) + " lines"
-        display += os.linesep + "Groups : " + ", ".join(self.__groups)
+        if self.__groups:
+            display += os.linesep + "Groups : " + ", ".join(self.__groups)
+        else:
+            display += os.linesep + "Groups : None"
         lines = min(5, len(self))
         if lines > 0:
             display += os.linesep + os.linesep + "First " + str(lines) + " lines"
             display += os.linesep + "============="
-            display += os.linesep + "\t" + "\t".join(self.__columns)
+            display += os.linesep + "\t"
+            if self.__groups:
+                display += "Group" + "\t"
+            display += "\t".join(self.__columns)
             for i in range(lines):
                 row = []
                 for key in self.__columns:
                     row.append(str(self.__data[key][i]))
-                display += os.linesep + str(i) + "\t" + "\t".join(row)
+                display += os.linesep + str(i) + "\t"
+                if self.__groups:
+                    display += str(groups[i]) + "\t"
+                display += "\t".join(row)
         return display
 
     def __len__(self):
@@ -200,6 +210,27 @@ class DataFrame:
             return len(self.__columns), len(self)
         else:
             return 0, 0
+
+    @property
+    def groups(self):
+        if self.__groups == []:
+            return [0] * len(self)
+        else:
+            groups = []
+            matchs = {}
+            next = 1
+            for i in range(len(self)):
+                identifier = ""
+                for key in self.__groups:
+                    identifier += key + str(self.__data[key][i])
+                result = matchs.get(identifier)
+                if result is None:
+                    matchs[identifier] = next
+                    groups.append(next)
+                    next += 1
+                else:
+                    groups.append(result)
+            return groups
 
     def add_column(self, name, content=None, after=None, before=None):
         if after is not None and before is not None:
