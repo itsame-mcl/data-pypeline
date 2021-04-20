@@ -22,6 +22,7 @@ class DataFrame:
     def __str__(self):
         display = "DataFrame ID#" + str(id(self))
         display += os.linesep + "Shape : " + str(self.shape[0]) + " columns X " + str(self.shape[1]) + " lines"
+        display += os.linesep + "Groups : " + ", ".join(self.__groups)
         lines = min(5, len(self))
         if lines > 0:
             display += os.linesep + os.linesep + "First " + str(lines) + " lines"
@@ -271,7 +272,22 @@ class DataFrame:
             else:
                 raise TypeError
 
-    def sup_column(self, name):
+    def add_group(self, name, level=None):
+        if isinstance(name, str):
+            if name in self.__columns:
+                if name not in self.__groups:
+                    if level is None:
+                        self.__groups.append(name)
+                    else:
+                        self.__groups.insert(level, name)
+                else:
+                    raise KeyError
+            else:
+                raise KeyError
+        else:
+            raise TypeError
+
+    def del_column(self, name):
         if isinstance(name, int):
             if 0 <= name < len(self.__columns):
                 key = self.__columns[name]
@@ -288,12 +304,21 @@ class DataFrame:
         else:
             raise TypeError
 
-    def sup_row(self, index):
+    def del_row(self, index):
         if isinstance(index, int):
             if 0 <= index < len(self):
                 for key in self.__columns:
                     del self.__data[key][index]
             else:
                 raise IndexError
+        else:
+            raise TypeError
+
+    def del_group(self, name):
+        if isinstance(name, str):
+            if name in self.__groups:
+                self.__groups.remove(name)
+            else:
+                raise KeyError
         else:
             raise TypeError
