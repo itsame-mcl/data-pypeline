@@ -163,6 +163,13 @@ class DataFrame:
             raise TypeError
 
     @property
+    def dict(self):
+        data_dict = {}
+        for key in self.__columns:
+            data_dict[key] = self.__data[key]
+        return data_dict
+
+    @property
     def columns(self):
         return self.__columns
 
