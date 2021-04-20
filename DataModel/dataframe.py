@@ -217,15 +217,15 @@ class DataFrame:
             return [0] * len(self)
         else:
             groups = []
-            matchs = {}
+            matches = {}
             next_id = 1
             for i in range(len(self)):
                 identifier = ""
                 for key in self.__groups:
                     identifier += key + str(self.__data[key][i])
-                result = matchs.get(identifier)
+                result = matches.get(identifier)
                 if result is None:
-                    matchs[identifier] = next_id
+                    matches[identifier] = next_id
                     groups.append(next_id)
                     next_id += 1
                 else:
