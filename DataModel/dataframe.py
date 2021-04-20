@@ -15,7 +15,7 @@ class DataFrame:
             if 0 <= item < len(self.__columns):
                 return self.__data[self.__columns[item]]
             else:
-                raise OverflowError
+                raise IndexError
         elif isinstance(item, str):
             if item in self.__columns:
                 return self.__data[item]
