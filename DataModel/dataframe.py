@@ -430,3 +430,9 @@ class DataFrame:
                 raise KeyError
         else:
             raise TypeError
+
+test = {"A":[1,2,3],"B":[4,5,6]}
+df = DataFrame(test)
+df.add_column("C",[8,9,10,11])
+df.add_column("A",[8,4,1,2])
+print(df)
