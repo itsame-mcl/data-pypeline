@@ -4,6 +4,14 @@ import os
 class DataFrame:
 
     def __init__(self, data=None):
+        """
+        Create a new DataFrame object from scratch or based on a dict with one key per column
+
+        Parameters
+        ----------
+        data : dict, optional
+            Dictionary with one key per column and data as list for each column on values
+        """
         if data is None:
             self.__groups = []
             self.__columns = []
@@ -46,6 +54,13 @@ class DataFrame:
         return display
 
     def __len__(self):
+        """
+
+        Returns
+        -------
+        int
+            Number of rows of the DataFrame
+        """
         length = 0
         for key in self.__columns:
             if self.__data.get(key) is not None:
@@ -54,6 +69,14 @@ class DataFrame:
         return length
 
     def __getitem__(self, item):
+        """
+
+        Parameters
+        ----------
+        item : {int, str, tuple}
+            Index or name of the column, or pair (name, index) or (index, index) of the point, or
+            pair (None, index) of the line
+        """
         if isinstance(item, int):
             if 0 <= item < len(self.__columns):
                 return self.__data[self.__columns[item]]
@@ -110,6 +133,16 @@ class DataFrame:
             raise TypeError
 
     def __setitem__(self, key, value):
+        """
+
+        Parameters
+        ----------
+        key : {int, str, tuple}
+            Index or name of the column, or pair (name, index) or (index, index) of the point, or
+            pair (None, index) of the line
+        value : {object, list}
+            List for a whole column or row, object for a single point
+        """
         if isinstance(key, int):
             if isinstance(value, list):
                 if 0 <= key < len(self.__columns):
@@ -195,6 +228,13 @@ class DataFrame:
 
     @property
     def dict(self):
+        """
+
+        Returns
+        -------
+        dict
+            Dictionary representation of the DataFrame
+        """
         data_dict = {}
         for key in self.__columns:
             data_dict[key] = self.__data[key]
@@ -202,10 +242,25 @@ class DataFrame:
 
     @property
     def vars(self):
+        """
+
+        Returns
+        -------
+        list
+            List of the variables names
+        """
         return self.__columns
 
     @property
     def shape(self):
+        """
+        Gives the shape of the DataFrame
+
+        Returns
+        -------
+        (int, int)
+            Number of columns and number of lines
+        """
         if len(self.__columns) > 0:
             return len(self.__columns), len(self)
         else:
@@ -213,6 +268,14 @@ class DataFrame:
 
     @property
     def groups(self):
+        """
+        Gives the group index of each row of the DataFrame, based on the group structure
+
+        Returns
+        -------
+        list
+            Group index of each row
+        """
         if not self.__groups:
             return [0] * len(self)
         else:
@@ -234,6 +297,13 @@ class DataFrame:
 
     @property
     def groups_vars(self):
+        """
+
+        Returns
+        -------
+        list
+            Hierarchical representation of the group structure
+        """
         return self.__groups
 
     def add_column(self, name, content=None, after=None, before=None):
