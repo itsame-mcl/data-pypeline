@@ -229,6 +229,18 @@ class DataFrame:
         else:
             raise TypeError
 
+    def __iter__(self):
+        self.__row = 0
+        return self
+
+    def __next__(self):
+        if self.__row < len(self):
+            result = self.__getitem__((None, self.__row))
+            self.__row += 1
+            return result
+        else:
+            raise StopIteration
+
     @property
     def dict(self):
         """
