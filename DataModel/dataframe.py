@@ -416,12 +416,16 @@ class DataFrame:
                 key = self.__columns[name]
                 self.__columns.remove(key)
                 del self.__data[key]
+                if key in self.__groups:
+                    self.__groups.remove(key)
             else:
                 raise IndexError
         elif isinstance(name, str):
             if name in self.__columns:
                 self.__columns.remove(name)
                 del self.__data[name]
+                if name in self.__groups:
+                    self.__groups.remove(name)
             else:
                 raise KeyError
         else:
