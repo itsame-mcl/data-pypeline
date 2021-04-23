@@ -22,3 +22,21 @@ class Import:
                 else:
                     df.add_row(row)
         return df
+
+    @classmethod
+    def importJSON(cls, path, root=None):
+        with open(path) as jsonfile:
+            data = json.load(jsonfile)
+            roots = list(data.keys())
+            if len(roots) == 1 or root is None:
+                root = roots[0]
+            elif root not in roots:
+                raise KeyError
+        table = data[root]
+        vars = list(table[0].keys())
+        df = DataFrame()
+        for var in vars:
+            df.add_column(var)
+        for row in table:
+            df.add_row(list(row.values()))
+        return df
