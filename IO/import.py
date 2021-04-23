@@ -4,8 +4,8 @@ from DataModel.dataframe import DataFrame
 
 
 class Import:
-    @classmethod
-    def import_csv(cls, path, headers=True, delimiter=";", encoding='ISO-8859-1'):
+    @staticmethod
+    def import_csv(path, headers=True, delimiter=";", encoding='ISO-8859-1'):
         df = DataFrame()
         with open(path, encoding=encoding) as csv_file:
             reader = csv.reader(csv_file, delimiter=delimiter)
@@ -24,8 +24,8 @@ class Import:
                     df.add_row(row)
         return df
 
-    @classmethod
-    def import_json(cls, path, root=None):
+    @staticmethod
+    def import_json(path, root=None):
         with open(path) as jsonfile:
             data = json.load(jsonfile)
             roots = list(data.keys())
