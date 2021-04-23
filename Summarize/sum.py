@@ -1,7 +1,7 @@
-from Summarize.crawler import Crawler
+from Summarize.rowsums import RowSums
 
 
-class Sum(Crawler):
+class Sum(RowSums):
     def apply(self, df):
         result = self._crawl(df, "val")
         return result

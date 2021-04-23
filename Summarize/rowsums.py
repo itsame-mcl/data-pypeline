@@ -5,7 +5,7 @@ from Transform.select import Select
 from Transform.groupby import GroupBy
 
 
-class Crawler(OnVars):
+class RowSums(OnVars):
     def __init__(self, arg_vars, ignore_na=True, ignore_nan=True):
         super().__init__(arg_vars)
         self.__na = ignore_na
