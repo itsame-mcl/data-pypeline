@@ -379,7 +379,7 @@ class DataFrame:
                     raise ValueError
                 if after is None and before is None:
                     for i in range(len(self.__columns)):
-                        self.__data[self.__columns[i]] = self.__data[self.__columns[i]] + [content[i]]
+                        self.__data[self.__columns[i]].append(content[i])
                 elif after is not None:
                     if isinstance(after, int):
                         for i in range(len(self.__columns)):
