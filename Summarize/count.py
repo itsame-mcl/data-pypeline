@@ -1,7 +1,7 @@
 from Summarize.crawler import Crawler
 
 
-class Sum(Crawler):
+class Count(Crawler):
     def apply(self, df):
-        result = self._crawl(df, "val")
+        result = self._crawl(df, "1")
         return result
