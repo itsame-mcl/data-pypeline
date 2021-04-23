@@ -3,9 +3,6 @@ from DataModel.dataframe import DataFrame
 
 
 class Select(OnVars):
-    def __init__(self,arg_vars):
-        super().__init__(arg_vars)
-
     def apply(self, df):
         result = DataFrame()
         for var in self.get_vars:
