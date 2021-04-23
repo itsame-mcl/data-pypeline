@@ -1,10 +1,10 @@
 from Pipeline.onvars import OnVars
-from DataModel.dataframe import DataFrame
+from copy import deepcopy
 
 
 class GroupBy(OnVars):
     def apply(self, df):
-        result = DataFrame(df.dict)
+        result = deepcopy(df)
         for var in self.vars:
             if var in df.vars:
                 result.add_group(var)
