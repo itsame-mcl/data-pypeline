@@ -10,7 +10,8 @@ class Pipeline:
     def add_operations(self, operations):
         self.__secure_add_operations(operations)
 
-    def get_operations(self):
+    @property
+    def operations(self):
         return self.__operations
 
     def del_operations(self, operations):
