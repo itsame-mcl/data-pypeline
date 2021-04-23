@@ -11,7 +11,7 @@ class OnVars(Pipelineable, ABC):
         self._secure_add_vars(arg_vars)
 
     @property
-    def get_vars(self):
+    def vars(self):
         return self._vars
 
     def del_vars(self, arg_vars):
