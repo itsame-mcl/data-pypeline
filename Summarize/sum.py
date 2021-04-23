@@ -2,6 +2,7 @@ import numbers
 from Pipeline.onvars import OnVars
 from DataModel.dataframe import DataFrame
 from Transform.select import Select
+from Transform.groupby import GroupBy
 
 
 class Sum(OnVars):
@@ -60,4 +61,5 @@ class Sum(OnVars):
                         else:
                             row[i] = (result[i, group-1] if (result[i, group-1] is not None) else 0) + row[i]
                     result[None, group-1] = row
+        result = GroupBy(df.groups_vars[:-1]).apply(result)
         return result
