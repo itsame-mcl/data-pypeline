@@ -5,6 +5,7 @@ import shapefile as shp
 import matplotlib.pyplot as plt
 import matplotlib.colors as clrs
 import matplotlib.cm as cm
+import os
 from jellyfish import levenshtein_distance
 
 
@@ -52,7 +53,11 @@ class CartoPlot:
     >>> fig.savefig('departements.test.jpg')
     '''
 
-    def __init__(self, departement_shp_path='departements-20180101.shp', regions_shp_path='regions-20180101.shp', colormap='viridis'):
+    def __init__(self,
+                 departement_shp_path=os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                   'departements-20180101.shp'),
+                 regions_shp_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'regions-20180101.shp'),
+                 colormap='viridis'):
         '''Create the object and gather the data on département and régions.
 
         Parameters
@@ -63,7 +68,7 @@ class CartoPlot:
             path to the shapefile (.shp) with régions
         colormap : str or matplotlib.colors.Colormap = 'viridis'
             argument to get a colormap using matplotlib.cm.get_cmap()
-        
+
         Examples
         --------
         >>> cp = CartoPlot()
@@ -108,18 +113,18 @@ class CartoPlot:
         nrm = CartoPlot.__normalizer(data, d_lim)
 
         return CartoPlot.__plot_map_base(
+            self.__sf_reg,
+            data=CartoPlot.__data_list(
                 self.__sf_reg,
-                data=CartoPlot.__data_list(
-                    self.__sf_reg,
-                    1,
-                    data,
-                    nrm=nrm),
-                cmap=self.__cmap,
-                nrm=nrm,
-                x_lim=x_lim,
-                y_lim=y_lim,
-                figsize=figsize,
-                label_record_idx=1 if show_name else 0)
+                1,
+                data,
+                nrm=nrm),
+            cmap=self.__cmap,
+            nrm=nrm,
+            x_lim=x_lim,
+            y_lim=y_lim,
+            figsize=figsize,
+            label_record_idx=1 if show_name else 0)
 
     def plot_dep_map(self, data={}, show_name=False, d_lim=(None, None), x_lim=None, y_lim=None, figsize=(11, 9)):
         '''Plot France's map with Départments and optional data.
@@ -161,19 +166,19 @@ class CartoPlot:
         nrm = CartoPlot.__normalizer(data, d_lim)
 
         return CartoPlot.__plot_map_base(
+            self.__sf_dep,
+            data=CartoPlot.__data_list(
                 self.__sf_dep,
-                data=CartoPlot.__data_list(
-                    self.__sf_dep,
-                    0,
-                    data,
-                    levenshtein_threshold=3 if show_name else 0,
-                    nrm=nrm),
-                cmap=self.__cmap,
-                nrm=nrm,
-                x_lim=x_lim,
-                y_lim=y_lim,
-                figsize=figsize,
-                label_record_idx=1 if show_name else 0)
+                0,
+                data,
+                levenshtein_threshold=3 if show_name else 0,
+                nrm=nrm),
+            cmap=self.__cmap,
+            nrm=nrm,
+            x_lim=x_lim,
+            y_lim=y_lim,
+            figsize=figsize,
+            label_record_idx=1 if show_name else 0)
 
     @staticmethod
     def __normalizer(data, d_lim=(None, None)):
@@ -244,11 +249,12 @@ class CartoPlot:
                     if levenshtein_distance(data_key, rec_idx) <= levenshtein_threshold:
                         data_list[shape_idx] = nrm(data_value)
                         break
-                
+
         return data_list
 
     @staticmethod
-    def __plot_map_base(sf, data=[], nrm=clrs.Normalize(0, 1, True), cmap=plt.get_cmap('viridis'), x_lim=None, y_lim=None, figsize=(11, 9), label_record_idx=0):
+    def __plot_map_base(sf, data=[], nrm=clrs.Normalize(0, 1, True), cmap=plt.get_cmap('viridis'), x_lim=None,
+                        y_lim=None, figsize=(11, 9), label_record_idx=0):
         '''Base function to plot shapes to form a map, and data to shade those shapes.
 
         The variable data could be changed to fit whatever type is needed in the project.
@@ -287,7 +293,7 @@ class CartoPlot:
                        labelleft=False,
                        labelbottom=False)
         fig.colorbar(cm.ScalarMappable(norm=nrm, cmap=cmap), ax=ax)
-        
+
         # Go through all shapes
         for shape_idx, shape in enumerate(sf.shapeRecords()):
             # Go through all parts (islands and such)
@@ -310,7 +316,7 @@ class CartoPlot:
             ax.text(x0, y0, shape.record[label_record_idx], fontsize=10, horizontalalignment='center')
 
         # The the axes limits
-        if (x_lim is not None) and (y_lim is not None):     
+        if (x_lim is not None) and (y_lim is not None):
             ax.set_xlim(x_lim)
             ax.set_ylim(y_lim)
 
