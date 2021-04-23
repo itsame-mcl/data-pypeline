@@ -40,29 +40,27 @@ class Crawler(OnVars):
                 result.add_column(var)
             max_group = 0
             for row, group in zip(df, df.groups):
-                for i in range(len(df.groups_vars), len(list_vars)):
-                    if row[i] is None:
+                for val, i in zip(row[len(df.groups_vars):], range(len(df.groups_vars), len(list_vars))):
+                    if val is None:
                         if self.__na:
                             continue
                         else:
                             raise ValueError
-                    elif not isinstance(row[i], numbers.Number):
+                    elif not isinstance(val, numbers.Number):
                         if self.__nan:
                             row[i] = None
                         else:
                             raise TypeError
                     else:
-                        val = row[i]
                         row[i] = eval(expr)
                 if group > max_group:
                     result.add_row(row)
                     max_group = group
                 else:
-                    for i in range(len(df.groups_vars), len(list_vars)):
-                        if row[i] is None:
+                    for val, i in zip(row[len(df.groups_vars):], range(len(df.groups_vars), len(list_vars))):
+                        if val is None:
                             row[i] = result[i, group-1]
                         else:
-                            val = row[i]
                             row[i] = (result[i, group-1] if (result[i, group-1] is not None) else 0) + eval(expr)
                     result[None, group-1] = row
         result = GroupBy(df.groups_vars[:-1]).apply(result)
