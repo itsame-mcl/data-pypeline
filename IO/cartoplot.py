@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import numpy as np
 import shapefile as shp
 import matplotlib.pyplot as plt
