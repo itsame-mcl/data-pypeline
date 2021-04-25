@@ -4,10 +4,10 @@ from copy import deepcopy
 
 
 class Mutate(OnVars):
-    def __init__(self, arg_vars, new_var, fun):
+    def __init__(self, arg_vars, fun, new_var):
         super().__init__(arg_vars)
-        self.__new_var = str(new_var)
         self.__fun = fun
+        self.__new_var = str(new_var)
 
     def apply(self, df):
         result = deepcopy(df)
