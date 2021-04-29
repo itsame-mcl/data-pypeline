@@ -21,4 +21,4 @@ class Count(OnGroups):
                     partial_count = 1
                 else:
                     partial_count += 1
-        return partial_count
+        return {"Count": partial_count}

@@ -38,7 +38,19 @@ class OnGroups(OnVars, ABC):
             for group_var in df.groups_vars:
                 row.append(group_df[group_var, 0])
             for var in self.vars:
-                row.append(self._operation(group_df[var]))
+                partial_result = self._operation(group_df[var])
+                if isinstance(partial_result, dict):
+                    keys = list(partial_result.keys())
+                    if (var + "_" + keys[0]) not in result.vars:
+                        last = var
+                        for key in keys:
+                            new_var = var + "_" + key
+                            result.add_column(new_var, after=last)
+                            last = new_var
+                        result.del_column(var)
+                    row.extend(list(partial_result.values()))
+                else:
+                    row.append(partial_result)
             result.add_row(row)
         result = GroupBy(df.groups_vars[:-1]).apply(result)
         return result

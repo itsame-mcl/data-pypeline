@@ -21,4 +21,4 @@ class Sum(OnGroups):
                     partial_sum = val
                 else:
                     partial_sum += val
-        return partial_sum
+        return {"Sum": partial_sum}
