@@ -1,3 +1,4 @@
+import numbers
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from Pipeline.onvars import OnVars
@@ -9,8 +10,8 @@ from Transform.groupby import GroupBy
 class OnGroups(OnVars, ABC):
     def __init__(self, arg_vars, ignore_na=True, ignore_nan=True):
         super().__init__(arg_vars)
-        self._na = ignore_na
-        self._nan = ignore_nan
+        self.__na = ignore_na
+        self.__nan = ignore_nan
 
     @abstractmethod
     def _operation(self, col):
@@ -38,7 +39,18 @@ class OnGroups(OnVars, ABC):
             for group_var in df.groups_vars:
                 row.append(group_df[group_var, 0])
             for var in self.vars:
-                partial_result = self._operation(group_df[var])
+                col = group_df[var]
+                if any(val is None for val in col):
+                    if self.__na:
+                        col = [val for val in col if val is not None]
+                    else:
+                        raise ValueError
+                if any(not isinstance(val, numbers.Number) for val in col):
+                    if self.__nan:
+                        col = [val for val in col if isinstance(val, numbers.Number)]
+                    else:
+                        raise TypeError
+                partial_result = self._operation(col)
                 if isinstance(partial_result, dict):
                     keys = list(partial_result.keys())
                     if (var + "_" + keys[0]) not in result.vars:
