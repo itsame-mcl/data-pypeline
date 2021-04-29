@@ -15,14 +15,14 @@ class Pipeline:
         return self.__operations
 
     def del_operations(self, operations):
-        if issubclass(operations, Pipelineable):
+        if issubclass(type(operations), Pipelineable):
             if operations in self.__operations:
                 self.__operations.remove(operations)
             else:
                 raise ValueError
         elif isinstance(operations, list) or isinstance(operations, tuple) or isinstance(operations, set):
             for operation in operations:
-                if issubclass(operation, Pipelineable):
+                if issubclass(type(operation), Pipelineable):
                     if operation in self.__operations:
                         self.__operations.remove(operation)
                     else:
@@ -32,18 +32,18 @@ class Pipeline:
         else:
             raise TypeError
 
-    def execute(self, df):
+    def apply(self, df):
         pipeline_df = deepcopy(df)
         for operation in self.__operations:
             pipeline_df = operation.apply(pipeline_df)
         return pipeline_df
 
     def __secure_add_operations(self, operations):
-        if issubclass(operations, Pipelineable):
+        if issubclass(type(operations), Pipelineable):
             self.__operations.append(operations)
         elif isinstance(operations, list) or isinstance(operations, tuple) or isinstance(operations, set):
             for operation in operations:
-                if issubclass(operation, Pipelineable):
+                if issubclass(type(operation), Pipelineable):
                     self.__operations.append(operation)
                 else:
                     raise TypeError
