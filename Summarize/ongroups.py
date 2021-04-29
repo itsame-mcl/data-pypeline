@@ -8,8 +8,8 @@ from Transform.groupby import GroupBy
 
 
 class OnGroups(OnVars, ABC):
-    def __init__(self, arg_vars, ignore_na=True, ignore_nan=True):
-        super().__init__(arg_vars)
+    def __init__(self, *on_vars, ignore_na=True, ignore_nan=True):
+        super().__init__(*on_vars)
         self.__na = ignore_na
         self.__nan = ignore_nan
 
@@ -19,7 +19,7 @@ class OnGroups(OnVars, ABC):
 
     def apply(self, df):
         list_vars = [*df.groups_vars, *self.vars]
-        df = Select(list_vars).apply(df)
+        df = Select(*list_vars).apply(df)
         empty_df = DataFrame()
         for var in list_vars:
             empty_df.add_column(var)
@@ -64,5 +64,5 @@ class OnGroups(OnVars, ABC):
                 else:
                     row.append(partial_result)
             result.add_row(row)
-        result = GroupBy(df.groups_vars[:-1]).apply(result)
+        result = GroupBy(*df.groups_vars[:-1]).apply(result)
         return result
