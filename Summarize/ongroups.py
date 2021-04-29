@@ -36,7 +36,7 @@ class OnGroups(OnVars, ABC):
         for group_df in groups:
             row = []
             for group_var in df.groups_vars:
-                row.append(group_df[group_var,0])
+                row.append(group_df[group_var, 0])
             for var in self.vars:
                 row.append(self._operation(group_df[var]))
             result.add_row(row)
