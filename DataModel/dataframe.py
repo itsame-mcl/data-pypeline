@@ -1,4 +1,5 @@
 import os
+from copy import deepcopy
 
 
 class DataFrame:
@@ -320,6 +321,23 @@ class DataFrame:
             Hierarchical representation of the group structure
         """
         return self.__groups
+
+    @property
+    def groups_df(self):
+        if len(self.__groups) == 0:
+            return [self]
+        else:
+            empty_df = DataFrame()
+            for var in self.vars:
+                empty_df.add_column(var)
+            df_groups = []
+            max_group = 0
+            for row, group in zip(self, self.groups):
+                if group > max_group:
+                    df_groups.append(deepcopy(empty_df))
+                    max_group = group
+                df_groups[group - 1].add_row(row)
+            return df_groups
 
     def add_column(self, name, content=None, after=None, before=None):
         if str(name) not in self.__columns:

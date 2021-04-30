@@ -1,15 +1,14 @@
-from Pipeline import Pipelineable
+from Transform import TransformOnGroups
 from DataModel import DataFrame
-from Transform import GroupBy
 
 
-class Filter(Pipelineable):
+class Filter(TransformOnGroups):
     def __init__(self, **criteria):
         if any(not isinstance(criterion, str) for criterion in list(criteria.values())):
             raise TypeError
         self.__criteria = criteria
 
-    def apply(self, df):
+    def _operation(self, df):
         vars_with_criterion = list(self.__criteria.keys())
         if any(var not in df.vars for var in vars_with_criterion):
             raise KeyError
@@ -34,5 +33,4 @@ class Filter(Pipelineable):
                         raise TypeError
             if add_row:
                 result.add_row(df[None, i])
-        result = GroupBy(*df.groups_vars).apply(result)
         return result

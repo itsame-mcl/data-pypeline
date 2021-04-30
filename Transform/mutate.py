@@ -1,14 +1,14 @@
-from Pipeline import Pipelineable
+from Transform import TransformOnGroups
 from copy import deepcopy
 
 
-class Mutate(Pipelineable):
+class Mutate(TransformOnGroups):
     def __init__(self, **expressions):
         if any(not isinstance(expression, str) for expression in list(expressions.values())):
             raise TypeError
         self.__expressions = expressions
 
-    def apply(self, df):
+    def _operation(self, df):
         result = deepcopy(df)
         new_vars = {}
         for new_var in list(self.__expressions.keys()):
