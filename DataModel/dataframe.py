@@ -428,6 +428,24 @@ class DataFrame:
         else:
             raise TypeError
 
+    def rename_column(self, old_name, new_name):
+        if isinstance(old_name, str):
+            if isinstance(new_name, str):
+                if old_name in self.__columns:
+                    if new_name not in self.__columns:
+                        rename_index = self.__columns.index(old_name)
+                        self.__columns[rename_index] = new_name
+                        self.__data[new_name] = self.__data[old_name]
+                        del self.__data[old_name]
+                    else:
+                        raise KeyError
+                else:
+                    raise KeyError
+            else:
+                raise TypeError
+        else:
+            raise TypeError
+
     def del_column(self, name):
         if isinstance(name, int):
             if 0 <= name < len(self.__columns):
