@@ -22,8 +22,7 @@ class Filter(Pipelineable):
             for var in vars_with_criterion:
                 test_result = False
                 try:
-                    test_result = eval(str(var) + " " + str(self.__criteria[var]),
-                                       {"__builtins__": {}}, row_dict)
+                    test_result = eval(str(var) + " " + str(self.__criteria[var]), {"__builtins__": {}}, row_dict)
                 except TypeError:
                     pass
                 except Exception as e:

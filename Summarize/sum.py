@@ -1,7 +1,7 @@
-from Pipeline import OnGroups
+from Summarize import SummarizeOnGroups
 
 
-class Sum(OnGroups):
+class Sum(SummarizeOnGroups):
     def _operation(self, col):
         partial_sum = None
         for val in col:

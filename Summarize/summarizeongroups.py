@@ -6,7 +6,7 @@ from Pipeline import OnVars
 from DataModel import DataFrame
 
 
-class OnGroups(OnVars, ABC):
+class SummarizeOnGroups(OnVars, ABC):
     def __init__(self, *on_vars, ignore_na=True, ignore_nan=True):
         super().__init__(*on_vars)
         self.__na = ignore_na

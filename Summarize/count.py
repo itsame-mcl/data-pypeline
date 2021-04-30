@@ -1,6 +1,6 @@
-from Pipeline import OnGroups
+from Summarize import SummarizeOnGroups
 
 
-class Count(OnGroups):
+class Count(SummarizeOnGroups):
     def _operation(self, col):
         return {"Count": len(col)}
