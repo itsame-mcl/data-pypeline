@@ -19,7 +19,8 @@ class Filter(Pipelineable):
         for i in range(len(df)):
             add_row = True
             for var in vars_with_criterion:
-                test_result = eval("df['" + str(var) + "'," + str(i) + "] " + str(self.__criteria[var]))
+                test_result = eval("df['" + str(var) + "'," + str(i) + "] " + str(self.__criteria[var]),
+                                   {"__builtins__": {}}, {'df': df})
                 if isinstance(test_result, bool):
                     add_row *= test_result
                 else:
