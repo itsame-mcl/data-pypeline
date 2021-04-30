@@ -1,6 +1,6 @@
 import csv
 import json
-from DataModel.dataframe import DataFrame
+from DataModel import DataFrame
 
 
 class Import:
