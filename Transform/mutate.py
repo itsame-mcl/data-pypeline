@@ -16,13 +16,30 @@ class Mutate(Pipelineable):
                 raise KeyError
             else:
                 new_vars[new_var] = []
-        for row in result:
+        for i in range(len(result)):
             row_dict = {}
-            for var, val in zip(result.vars, row):
-                row_dict[var] = val
+            for var in result.vars:
+                row_dict[var] = result[var, i]
+                lag_var = "lag_" + str(var)
+                if i > 0:
+                    row_dict[lag_var] = result[var, i-1]
+                else:
+                    row_dict[lag_var] = None
+                lead_var = "lead_" + str(var)
+                if i+1 < len(result):
+                    row_dict[lead_var] = result[var, i+1]
+                else:
+                    row_dict[lead_var] = None
             for new_var in list(new_vars.keys()):
-                new_val = eval(self.__expressions[new_var], {"__builtins__": {}}, row_dict)
-                new_vars[new_var].append(new_val)
+                new_val = None
+                try:
+                    new_val = eval(self.__expressions[new_var], {"__builtins__": {}}, row_dict)
+                except TypeError:
+                    pass
+                except Exception as e:
+                    raise e
+                finally:
+                    new_vars[new_var].append(new_val)
         for new_var in list(new_vars.keys()):
             result.add_column(new_var, new_vars[new_var])
         return result
