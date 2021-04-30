@@ -1,7 +1,7 @@
-from Pipeline.onvars import OnVars
+from Pipeline import OnVars
+from DataModel import DataFrame
 from Transform.mutate import Mutate
 from Transform.groupby import GroupBy
-from DataModel import DataFrame
 
 
 class Filter(OnVars):

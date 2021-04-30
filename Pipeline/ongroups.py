@@ -1,7 +1,7 @@
 import numbers
 from abc import ABC, abstractmethod
 from copy import deepcopy
-from Pipeline.onvars import OnVars
+from Pipeline import OnVars
 from DataModel import DataFrame
 from Transform.select import Select
 from Transform.groupby import GroupBy

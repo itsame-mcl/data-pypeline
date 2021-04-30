@@ -1,4 +1,4 @@
-from Pipeline.onvars import OnVars
+from Pipeline import OnVars
 from DataModel import DataFrame
 from Transform.groupby import GroupBy
 

@@ -1,5 +1,5 @@
 from abc import ABC
-from Pipeline.pipelineable import Pipelineable
+from Pipeline import Pipelineable
 
 
 class OnVars(Pipelineable, ABC):

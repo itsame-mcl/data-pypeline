@@ -1,4 +1,4 @@
-from Pipeline.onvars import OnVars
+from Pipeline import OnVars
 from Transform.select import Select
 from Transform.ungroup import Ungroup
 from copy import deepcopy

@@ -1,4 +1,4 @@
-from Summarize.ongroups import OnGroups
+from Pipeline import OnGroups
 
 
 class Sum(OnGroups):

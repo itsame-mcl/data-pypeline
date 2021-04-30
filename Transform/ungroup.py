@@ -1,4 +1,4 @@
-from Pipeline.pipelineable import Pipelineable
+from Pipeline import Pipelineable
 from copy import deepcopy
 
 
