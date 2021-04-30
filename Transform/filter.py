@@ -1,6 +1,6 @@
 from Pipeline import Pipelineable
 from DataModel import DataFrame
-from Transform.groupby import GroupBy
+from Transform import GroupBy
 
 
 class Filter(Pipelineable):
