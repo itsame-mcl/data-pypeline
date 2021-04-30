@@ -1,10 +1,9 @@
 import numbers
+import Transform
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from Pipeline import OnVars
 from DataModel import DataFrame
-from Transform.select import Select
-from Transform.groupby import GroupBy
 
 
 class OnGroups(OnVars, ABC):
@@ -19,7 +18,7 @@ class OnGroups(OnVars, ABC):
 
     def apply(self, df):
         list_vars = [*df.groups_vars, *self.vars]
-        df = Select(*list_vars).apply(df)
+        df = Transform.Select(*list_vars).apply(df)
         empty_df = DataFrame()
         for var in list_vars:
             empty_df.add_column(var)
@@ -64,5 +63,5 @@ class OnGroups(OnVars, ABC):
                 else:
                     row.append(partial_result)
             result.add_row(row)
-        result = GroupBy(*df.groups_vars[:-1]).apply(result)
+        result = Transform.GroupBy(*df.groups_vars[:-1]).apply(result)
         return result
