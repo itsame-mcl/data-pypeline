@@ -449,3 +449,21 @@ class DataFrame:
                 raise KeyError
         else:
             raise TypeError
+
+    def row_as_dict(self, index, with_lag=True, with_lead=True):
+        row_dict = {}
+        for var in self.vars:
+            row_dict[var] = self.__getitem__((var, index))
+            if with_lag:
+                lag_var = "lag_" + str(var)
+                if index > 0:
+                    row_dict[lag_var] = self.__getitem__((var, index - 1))
+                else:
+                    row_dict[lag_var] = None
+            if with_lead:
+                lead_var = "lead_" + str(var)
+                if index + 1 < len(self):
+                    row_dict[lead_var] = self.__getitem__((var, index + 1))
+                else:
+                    row_dict[lead_var] = None
+        return row_dict

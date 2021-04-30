@@ -17,19 +17,7 @@ class Mutate(Pipelineable):
             else:
                 new_vars[new_var] = []
         for i in range(len(result)):
-            row_dict = {}
-            for var in result.vars:
-                row_dict[var] = result[var, i]
-                lag_var = "lag_" + str(var)
-                if i > 0:
-                    row_dict[lag_var] = result[var, i-1]
-                else:
-                    row_dict[lag_var] = None
-                lead_var = "lead_" + str(var)
-                if i+1 < len(result):
-                    row_dict[lead_var] = result[var, i+1]
-                else:
-                    row_dict[lead_var] = None
+            row_dict = result.row_as_dict(i)
             for new_var in list(new_vars.keys()):
                 new_val = None
                 try:
