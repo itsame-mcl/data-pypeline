@@ -2,7 +2,7 @@ from Pipeline import Pipelineable
 from copy import deepcopy
 
 
-class Pipeline:
+class Pipeline(Pipelineable):
     def __init__(self, *operations):
         self.__operations = []
         self.__secure_add_operations(operations)
