@@ -1,8 +1,8 @@
 import numbers
-import Transform
 from abc import ABC
 from Pipeline import OnVars, OnGroups
 from DataModel import DataFrame
+from Transform import Select, GroupBy
 
 
 class SummarizeOnGroups(OnVars, OnGroups, ABC):
@@ -13,7 +13,7 @@ class SummarizeOnGroups(OnVars, OnGroups, ABC):
 
     def apply(self, df):
         list_vars = [*df.groups_vars, *self.vars]
-        df = Transform.Select(*list_vars).apply(df)
+        df = Select(*list_vars).apply(df)
         result = DataFrame()
         for var in list_vars:
             result.add_column(var)
@@ -48,5 +48,5 @@ class SummarizeOnGroups(OnVars, OnGroups, ABC):
                 else:
                     row.append(partial_result)
             result.add_row(row)
-        result = Transform.GroupBy(*df.groups_vars[:-1]).apply(result)
+        result = GroupBy(*df.groups_vars[:-1]).apply(result)
         return result
