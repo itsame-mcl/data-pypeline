@@ -1,7 +1,7 @@
-import Transform
 from abc import ABC
 from Pipeline import OnGroups
 from DataModel import DataFrame
+from Transform import GroupBy
 
 
 class TransformOnGroups(OnGroups, ABC):
@@ -16,5 +16,5 @@ class TransformOnGroups(OnGroups, ABC):
                         result.add_column(var)
                 for row in transformed_group:
                     result.add_row(row)
-        result = Transform.GroupBy(*df.groups_vars).apply(result)
+        result = GroupBy(*df.groups_vars).apply(result)
         return result
