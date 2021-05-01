@@ -1,4 +1,4 @@
-import os
+from os import linesep
 from copy import deepcopy
 
 
@@ -34,16 +34,16 @@ class DataFrame:
     def __str__(self):
         groups = self.groups
         display = "DataFrame ID#" + str(id(self))
-        display += os.linesep + "Shape : " + str(self.shape[0]) + " columns X " + str(self.shape[1]) + " lines"
+        display += linesep + "Shape : " + str(self.shape[0]) + " columns X " + str(self.shape[1]) + " lines"
         if self.__groups:
-            display += os.linesep + "Groups : " + ", ".join(self.__groups)
+            display += linesep + "Groups : " + ", ".join(self.__groups)
         else:
-            display += os.linesep + "Groups : None"
+            display += linesep + "Groups : None"
         lines = min(5, len(self))
         if lines > 0:
-            display += os.linesep + os.linesep + "First " + str(lines) + " lines"
-            display += os.linesep + "============="
-            display += os.linesep + "\t"
+            display += linesep + linesep + "First " + str(lines) + " lines"
+            display += linesep + "============="
+            display += linesep + "\t"
             if self.__groups:
                 display += "Group" + "\t"
             display += "\t".join(self.__columns)
@@ -51,7 +51,7 @@ class DataFrame:
                 row = []
                 for key in self.__columns:
                     row.append(str(self.__data[key][i]))
-                display += os.linesep + str(i) + "\t"
+                display += linesep + str(i) + "\t"
                 if self.__groups:
                     display += str(groups[i]) + "\t"
                 display += "\t".join(row)
