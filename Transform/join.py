@@ -6,6 +6,16 @@ from copy import deepcopy
 
 class Join(Pipelineable):
     def __init__(self, other, **matches):
+        """
+        Define the left join transformation
+
+        Parameters
+        ----------
+        other : DataFrame
+            Right hand DataFrame for the juncture
+        matches : kwargs
+            Pairs of matching variables, on the form : RightHand="LeftHand"
+        """
         if any(not isinstance(match, str) for match in list(matches.values())):
             raise TypeError
         self.__other = other
@@ -15,9 +25,12 @@ class Join(Pipelineable):
         result = DataFrame()
         other_vars = [var for var in self.__other.vars if var not in list(self.__matches.keys())]
         for var in df.vars:
-            result.add_column("X_" + str(var))
+            result.add_column(var)
         for var in other_vars:
-            result.add_column("Y_" + str(var))
+                if var in df.vars:
+                    result.add_column("Y_" + str(var))
+                else:
+                    result.add_column(var)
         for i in range(len(df)):
             base_row = df[None, i]
             filter_kw = {}
