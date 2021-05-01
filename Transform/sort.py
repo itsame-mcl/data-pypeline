@@ -4,6 +4,35 @@ from DataModel import DataFrame
 
 
 class Sort(OnVars, TransformOnGroups):
+    """
+    Implements the merge sort algorithm for DataFrame transformation.
+
+    ...
+
+    Attributes
+    ----------
+    self.__vars : str
+        Ordered list of the sorting vars criteria. Use the "desc_" prefix before the name of a variable
+        to perform a descending sorting on this variable.
+
+    Methods
+    -------
+    _operation(group_df) : DataFrame
+        Execute the sorting algorithm on the group_df object, assuming this DataFrame represents a single group
+
+    __merge_sort(nested_list, index_criteria) : list
+        Entry point for the merge sort algorithm based on a nested list (first level : rows, second level : columns)
+        and the list of sorting criteria columns indexes. This list is shifted of 1 (i.e. for the real index
+        5, the index_critera will be 6) and negative for descending sorting (i.e. a descending sorting on the column
+        0 will be coded -1).
+
+    __merge(nested_list_a, nested_list_b, index_criteria) : list
+        Performs the merge step of the merge sort algorithm between two ordered nested lists.
+
+    __compare_lists(list_a, list_b, index_criteria) : bool
+        Will be True if list_a should be inserted before list_b and False on the contrary, based on the
+        variables defined by index_criteria
+    """
     def _operation(self, group_df):
         nested_group_list = []
         for row in group_df:
