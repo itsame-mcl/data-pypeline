@@ -7,3 +7,4 @@ from .mutate import *
 from .filter import *
 from .join import *
 from .sort import *
+from .movingaverage import MovingAverage
