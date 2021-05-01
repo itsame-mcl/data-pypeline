@@ -10,7 +10,13 @@ class Sort(OnVars, TransformOnGroups):
             nested_group_list.append(row)
         index_criteria = []
         for var in self.vars:
-            index_criterion = group_df.vars.index(var)
+            is_desc = False
+            if var.startswith("desc_"):
+                is_desc = True
+                var = var[5:]
+            index_criterion = group_df.vars.index(var) + 1
+            if is_desc:
+                index_criterion *= -1
             index_criteria.append(index_criterion)
         sorted_group_list = Sort.__merge_sort(nested_group_list, index_criteria)
         result = DataFrame()
@@ -49,12 +55,27 @@ class Sort(OnVars, TransformOnGroups):
     def __compare_lists(list_a, list_b, index_criteria):
         result = True
         for index_criterion in index_criteria:
-            if list_a[index_criterion] < list_b[index_criterion]:
-                result = True
-                break
-            elif list_a[index_criterion] > list_b[index_criterion]:
-                result = False
-                break
+            is_desc = False
+            if index_criterion < 0:
+                is_desc = True
+                index_criterion *= -1
+            index_criterion -= 1
+            if is_desc:
+                if list_a[index_criterion] > list_b[index_criterion]:
+                    result = True
+                    break
+                elif list_a[index_criterion] < list_b[index_criterion]:
+                    result = False
+                    break
+                else:
+                    continue
             else:
-                continue
+                if list_a[index_criterion] < list_b[index_criterion]:
+                    result = True
+                    break
+                elif list_a[index_criterion] > list_b[index_criterion]:
+                    result = False
+                    break
+                else:
+                    continue
         return result
