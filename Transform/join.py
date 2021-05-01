@@ -27,10 +27,10 @@ class Join(Pipelineable):
         for var in df.vars:
             result.add_column(var)
         for var in other_vars:
-                if var in df.vars:
-                    result.add_column("Y_" + str(var))
-                else:
-                    result.add_column(var)
+            if var in df.vars:
+                result.add_column("Y_" + str(var))
+            else:
+                result.add_column(var)
         for i in range(len(df)):
             base_row = df[None, i]
             filter_kw = {}
