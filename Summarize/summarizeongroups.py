@@ -1,5 +1,5 @@
-import numbers
 from abc import ABC
+from numbers import Number
 from Pipeline import OnVars, OnGroups
 from DataModel import DataFrame
 from Transform import Select, GroupBy
@@ -29,9 +29,9 @@ class SummarizeOnGroups(OnVars, OnGroups, ABC):
                         col = [val for val in col if val is not None]
                     else:
                         raise ValueError
-                if any(not isinstance(val, numbers.Number) for val in col):
+                if any(not isinstance(val, Number) for val in col):
                     if self.__nan:
-                        col = [val for val in col if isinstance(val, numbers.Number)]
+                        col = [val for val in col if isinstance(val, Number)]
                     else:
                         raise TypeError
                 partial_result = self._operation(col)
