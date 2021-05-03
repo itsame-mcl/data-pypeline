@@ -10,9 +10,9 @@ class Variance(SummarizeOnGroups):
     def _operation(self, col):
         n = len(col)
         partial_average = None
-        partial_average_squarred = None
+        partial_average_squared = None
         for val in col:
-            if partial_average is None and partial_average_squarred is None:
+            if partial_average is None and partial_average_squared is None:
                 partial_average = val / n
                 partial_average_squared = val**2 / n
             else:
