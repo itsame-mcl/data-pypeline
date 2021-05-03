@@ -1,6 +1,7 @@
 from Summarize import SummarizeOnGroups
 from math import sqrt
 
+
 class Variance(SummarizeOnGroups):
     def __init__(self, *on_vars, ignore_na=True, ignore_nan=True, get_var=True, get_sd=True):
         super().__init__(*on_vars, ignore_na, ignore_nan)
@@ -21,8 +22,8 @@ class Variance(SummarizeOnGroups):
         var = (partial_average_squared - partial_average**2)
         sd = sqrt(var)
         res = dict()
-        if self.__get_var == True:
+        if self.__get_var:
             res["Var"] = var
-        if self.__get_sd == True:
+        if self.__get_sd:
             res["SD"] = sd
         return res
