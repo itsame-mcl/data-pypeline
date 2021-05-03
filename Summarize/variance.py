@@ -14,11 +14,11 @@ class Variance(SummarizeOnGroups):
         for val in col:
             if partial_average is None and partial_average_squarred is None:
                 partial_average = val / n
-                partial_average_squarred = val**2 / n
+                partial_average_squared = val**2 / n
             else:
                 partial_average += val / n
-                partial_average_squarred += val**2 / n
-        var = (partial_average_squarred - partial_average**2)
+                partial_average_squared += val**2 / n
+        var = (partial_average_squared - partial_average**2)
         sd = sqrt(var)
         res = dict()
         if self.__get_var == True:
