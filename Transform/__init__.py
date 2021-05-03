@@ -2,9 +2,10 @@ from .groupby import *
 from .ungroup import *
 from .rename import *
 from .select import *
-from .transformongroups import TransformOnGroups
+from .transformongroups import *
 from .mutate import *
 from .filter import *
 from .join import *
 from .sort import *
-from .movingaverage import MovingAverage
+from .movingaverage import *
+from .normalize import *
