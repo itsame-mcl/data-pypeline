@@ -4,7 +4,7 @@ from math import sqrt
 
 class Variance(SummarizeOnGroups):
     def __init__(self, *on_vars, ignore_na=True, ignore_nan=True, get_var=True, get_sd=True):
-        super().__init__(*on_vars, ignore_na, ignore_nan)
+        super().__init__(*on_vars, ignore_na=ignore_na, ignore_nan=ignore_nan)
         self.__get_var = get_var
         self.__get_sd = get_sd
 
