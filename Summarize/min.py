@@ -1,4 +1,4 @@
-from summarizeongroups import SummarizeOnGroups
+from Summarize import SummarizeOnGroups
 
 
 class Min(SummarizeOnGroups):
