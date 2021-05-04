@@ -1,3 +1,4 @@
+from numbers import Number
 from Pipeline import OnVars
 from Transform import TransformOnGroups
 from Summarize import Average, Variance
@@ -18,9 +19,9 @@ class Normalize(OnVars, TransformOnGroups):
             new_var = group_df[var]
             if self.__center:
                 average = average_df[var + "_Average", 0]
-                new_var = [x - average for x in new_var]
+                new_var = [(x - average) if isinstance(x, Number) else None for x in new_var]
             if self.__reduce:
                 sd = sd_df[var + "_SD", 0]
-                new_var = [x / sd for x in new_var]
+                new_var = [(x / sd) if isinstance(x, Number) else None for x in new_var]
             result.add_column(var + "_Std", new_var, after=var)
         return result
