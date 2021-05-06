@@ -9,3 +9,4 @@ from .join import *
 from .sort import *
 from .movingaverage import *
 from .normalize import *
+from .kmeans import KMeans
