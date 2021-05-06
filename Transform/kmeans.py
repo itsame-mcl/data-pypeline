@@ -7,10 +7,11 @@ from math import sqrt
 
 
 class KMeans(OnVars, TransformOnGroups):
-    def __init__(self, clusters, *on_vars, normalize=True):
+    def __init__(self, clusters, *on_vars, normalize=True, max_iter=1000):
         super().__init__(*on_vars)
         self.__clusters = clusters
         self.__normalize = normalize
+        self.__max_iter = max_iter
 
     def _operation(self, group_df):
         result = deepcopy(group_df)
@@ -35,9 +36,11 @@ class KMeans(OnVars, TransformOnGroups):
                 new_center.append(uniform(mins[var + "_Min", 0], maxs[var + "_Max", 0]))
             centers.append(new_center)
         cluster = [None] * len(base)
-        any_change = True
-        while any_change:
+        continue_loop = True
+        iteration = 0
+        while continue_loop:
             new_cluster = []
+            iteration += 1
             for row in base:
                 best_distance = None
                 best_cluster = None
@@ -48,7 +51,7 @@ class KMeans(OnVars, TransformOnGroups):
                         best_cluster = i
                 new_cluster.append(best_cluster)
             if new_cluster == cluster:
-                any_change = False
+                continue_loop = False
             else:
                 new_centers = deepcopy(base)
                 new_centers.add_column("Partition", new_cluster)
@@ -59,6 +62,8 @@ class KMeans(OnVars, TransformOnGroups):
                 for row in new_centers:
                     centers[row[0]] = row[1:]
             cluster = new_cluster
+            if iteration > self.__max_iter:
+                continue_loop = False
         result.add_column("Partition", cluster)
         return result
 
