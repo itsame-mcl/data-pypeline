@@ -7,11 +7,11 @@ from Pipeline import Pipelineable
 
 
 class ExportMap(Pipelineable):
-    def __init__(self, path, type, var_geocode, var_tomap, title=None, color_scale='viridis'):
+    def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis'):
         self.__path = path
-        if type == "dep" or type == "departement":
+        if type_geo == "dep" or type_geo == "departement":
             self.__json_path = "../data/departements.geojson"
-        elif type == "reg" or type == "region":
+        elif type_geo == "reg" or type_geo == "region":
             self.__json_path = "../data/regions.geojson"
         else:
             raise ValueError
