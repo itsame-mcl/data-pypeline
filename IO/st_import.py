@@ -7,7 +7,7 @@ class Import:
     @staticmethod
     def import_csv(path, headers=True, delimiter=";", encoding='ISO-8859-1'):
         df = DataFrame()
-        with open(path, encoding=encoding) as csv_file:
+        with open(path, newline='', encoding=encoding) as csv_file:
             reader = csv.reader(csv_file, delimiter=delimiter)
             first_row = True
             for row in reader:
