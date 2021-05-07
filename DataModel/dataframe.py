@@ -66,10 +66,11 @@ class DataFrame:
             Number of rows of the DataFrame
         """
         length = 0
-        for key in self.__columns:
-            if self.__data.get(key) is not None:
-                if len(self.__data[key]) > length:
-                    length = len(self.__data[key])
+        for key in self.__data:
+            if self.__data[key] is not None:
+                candidate_len = len(self.__data[key])
+                if candidate_len > length:
+                    length = candidate_len
         return length
 
     def __getitem__(self, item):
@@ -236,7 +237,9 @@ class DataFrame:
 
     def __next__(self):
         if self.__row < len(self):
-            result = self.__getitem__((None, self.__row))
+            result = []
+            for key in self.__columns:
+                result.append(self.__data[key][self.__row])
             self.__row += 1
             return result
         else:
@@ -392,7 +395,7 @@ class DataFrame:
                     content = []
                 if len(content) < len(self.__columns):
                     for _ in range(len(self.__columns) - len(content)):
-                        content = content + [None]
+                        content.append(None)
                 elif len(content) > len(self.__columns):
                     raise ValueError
                 if after is None and before is None:
@@ -488,18 +491,20 @@ class DataFrame:
 
     def row_as_dict(self, index, with_lag=True, with_lead=True):
         row_dict = {}
+        have_lag = index > 0
+        have_lead = index + 1 < len(self)
         for var in self.vars:
-            row_dict[var] = self.__getitem__((var, index))
+            row_dict[var] = self.__data[var][index]
             if with_lag:
                 lag_var = "lag_" + str(var)
-                if index > 0:
-                    row_dict[lag_var] = self.__getitem__((var, index - 1))
+                if have_lag > 0:
+                    row_dict[lag_var] = self.__data[var][index - 1]
                 else:
                     row_dict[lag_var] = None
             if with_lead:
                 lead_var = "lead_" + str(var)
-                if index + 1 < len(self):
-                    row_dict[lead_var] = self.__getitem__((var, index + 1))
+                if have_lead:
+                    row_dict[lead_var] = self.__data[var][index + 1]
                 else:
                     row_dict[lead_var] = None
         return row_dict
