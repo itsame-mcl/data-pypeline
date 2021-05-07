@@ -1,5 +1,6 @@
 from .groupby import *
 from .ungroup import *
+from .asnumeric import *
 from .rename import *
 from .select import *
 from .transformongroups import *

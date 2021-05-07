@@ -6,10 +6,10 @@ from Transform import Select, GroupBy
 
 
 class SummarizeOnGroups(OnVars, OnGroups, ABC):
-    def __init__(self, *on_vars, ignore_na=True, ignore_nan=True):
+    def __init__(self, *on_vars, delete_na=True, delete_nan=True):
         super().__init__(*on_vars)
-        self.__na = ignore_na
-        self.__nan = ignore_nan
+        self.__del_na = delete_na
+        self.__del_nan = delete_nan
 
     def apply(self, df):
         list_vars = [*df.groups_vars, *self.vars]
@@ -24,16 +24,10 @@ class SummarizeOnGroups(OnVars, OnGroups, ABC):
                 row.append(group_df[group_var, 0])
             for var in self.vars:
                 col = group_df[var]
-                if any(val is None for val in col):
-                    if self.__na:
-                        col = [val for val in col if val is not None]
-                    else:
-                        raise ValueError
-                if any(not isinstance(val, Number) for val in col):
-                    if self.__nan:
-                        col = [val for val in col if isinstance(val, Number)]
-                    else:
-                        raise TypeError
+                if self.__del_na:
+                    col = [val for val in col if val is not None]
+                if self.__del_nan:
+                    col = [val for val in col if isinstance(val, Number)]
                 partial_result = self._operation(col)
                 if isinstance(partial_result, dict):
                     keys = list(partial_result.keys())

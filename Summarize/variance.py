@@ -3,8 +3,8 @@ from math import sqrt
 
 
 class Variance(SummarizeOnGroups):
-    def __init__(self, *on_vars, ignore_na=True, ignore_nan=True, get_var=True, get_sd=True):
-        super().__init__(*on_vars, ignore_na=ignore_na, ignore_nan=ignore_nan)
+    def __init__(self, *on_vars, delete_na=True, delete_nan=True, get_var=True, get_sd=True):
+        super().__init__(*on_vars, delete_na=delete_na, delete_nan=delete_nan)
         self.__get_var = get_var
         self.__get_sd = get_sd
 
