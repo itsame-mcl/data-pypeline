@@ -4,7 +4,7 @@ import matplotlib.colors as clrs
 import matplotlib.pyplot as plt
 from descartes import PolygonPatch
 from Pipeline import Pipelineable
-from mpl_toolkits.
+
 
 class ExportMap(Pipelineable):
     def __init__(self, path, type, var_geocode, var_tomap, title=None, color_scale='viridis'):
