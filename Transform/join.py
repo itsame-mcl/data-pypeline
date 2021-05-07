@@ -31,21 +31,26 @@ class Join(Pipelineable):
                 result.add_column("Y_" + str(var))
             else:
                 result.add_column(var)
+        known_matches = {}
         for i in range(len(df)):
             base_row = df[None, i]
             filter_kw = {}
+            filter_str = ""
             for key in list(self.__matches.keys()):
                 target_value = df[self.__matches[key], i]
                 filter_kw[key] = '=="' + str(target_value) + '"'
-            matches = Filter(**filter_kw).apply(self.__other)
-            if len(matches) == 0:
-                nones = [None] * len(other_vars)
-                base_row.extend(nones)
-                result.add_row(base_row)
+                filter_str += str(key) + "_" + str(target_value)
+            if known_matches.get(filter_str) is None:
+                matches = Filter(**filter_kw).apply(self.__other)
+                if len(matches) == 0:
+                    other_content = [None] * len(other_vars)
+                else:
+                    other_content = Select(*other_vars).apply(matches)
+                known_matches[filter_str] = other_content
             else:
-                matches = Select(*other_vars).apply(matches)
-                for row in matches:
-                    new_row = deepcopy(base_row)
-                    new_row.extend(row)
-                    result.add_row(new_row)
+                other_content = known_matches[filter_str]
+            for row in other_content:
+                new_row = deepcopy(base_row)
+                new_row.extend(row)
+                result.add_row(new_row)
         return result
