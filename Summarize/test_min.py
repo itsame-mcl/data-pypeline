@@ -10,10 +10,10 @@ class TestMin(unittest.TestCase):
                              "Var2": [74, 81, 85, 71, 102, 99, 101, 76]})
 
     def test_min_var1(self):
-        self.assertEqual(Min(self.df["Var1"][0]), [289])
+        self.assertEqual(Min("Var1").apply(self.df)["Var1_Min"], [289])
 
     def test_min_var2(self):
-        self.assertEqual(Min(self.df["Var2"][0]), [71])
+        self.assertEqual(Min("Var2").apply(self.df)["Var2_Min"], [71])
 
 
 if __name__ == "__main__":
