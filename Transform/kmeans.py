@@ -1,5 +1,5 @@
-from Pipeline import OnVars
-from Transform import TransformOnGroups
+from Pipeline import OnVars, Pipeline
+from Transform import TransformOnGroups, Normalize, Select, Rename, GroupBy
 from copy import deepcopy
 from random import seed, uniform
 from math import sqrt
@@ -14,9 +14,7 @@ class KMeans(OnVars, TransformOnGroups):
         self.__seed = random_seed
 
     def _operation(self, group_df):
-        from Pipeline import Pipeline
         from Summarize import Min, Max, Average
-        from Transform import Normalize, Select, Rename, GroupBy
         result = deepcopy(group_df)
         base = Select(*self.vars).apply(result)
         if self.__normalize:
