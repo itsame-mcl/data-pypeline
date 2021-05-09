@@ -1,7 +1,6 @@
 from numbers import Number
 from Pipeline import OnVars
 from Transform import TransformOnGroups
-from Summarize import Average, Variance
 from copy import deepcopy
 
 
@@ -12,6 +11,7 @@ class Normalize(OnVars, TransformOnGroups):
         self.__reduce = reduce
 
     def _operation(self, group_df):
+        from Summarize import Average, Variance
         result = deepcopy(group_df)
         average_df = Average(*self.vars).apply(group_df)
         sd_df = Variance(*self.vars, get_var=False).apply(group_df)

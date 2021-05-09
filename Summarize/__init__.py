@@ -1,4 +1,4 @@
-from .summarizeongroups import SummarizeOnGroups
+from .summarizeongroups import *
 from .count import *
 from .sum import *
 from .min import *

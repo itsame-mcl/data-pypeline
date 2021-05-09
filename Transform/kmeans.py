@@ -1,6 +1,5 @@
-from Pipeline import OnVars, Pipeline
-from Transform import TransformOnGroups, Normalize, Select, Rename, GroupBy
-from Summarize import Min, Max, Average
+from Pipeline import OnVars
+from Transform import TransformOnGroups
 from copy import deepcopy
 from random import seed, uniform
 from math import sqrt
@@ -15,6 +14,9 @@ class KMeans(OnVars, TransformOnGroups):
         self.__seed = random_seed
 
     def _operation(self, group_df):
+        from Pipeline import Pipeline
+        from Summarize import Min, Max, Average
+        from Transform import Normalize, Select, Rename, GroupBy
         result = deepcopy(group_df)
         base = Select(*self.vars).apply(result)
         if self.__normalize:
@@ -36,7 +38,7 @@ class KMeans(OnVars, TransformOnGroups):
         for i in range(self.__clusters):
             new_center = []
             for var in base.vars:
-                new_center.append(uniform(mins[var + "_Min", 0], maxs[var + "_Max", 0]))
+                new_center.append(uniform(mins[str(var) + "_Min", 0], maxs[str(var) + "_Max", 0]))
             centers.append(new_center)
         cluster = [None] * len(base)
         continue_loop = True
