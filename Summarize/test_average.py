@@ -8,8 +8,7 @@ from numpy import mean
 
 class TestAverage(unittest.TestCase):
     def setUp(self):
-        self.df = DataFrame({"Id": ["01", "02", "03", "04", "05", "06", "07", "08"],
-                             "Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
+        self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [98, 100, 102, 100, 200, 150, 620, 40],
                              "Var2": [74, 81, 85, 71, 103, 99, 101, 76]})
 

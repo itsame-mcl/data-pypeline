@@ -7,8 +7,7 @@ from Pipeline import Pipeline
 
 class TestCount(unittest.TestCase):
     def setUp(self):
-        self.df = DataFrame({"Id": ["01", "02", "03", "04", "05", "06", "07", "08"],
-                             "Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
+        self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [348, 402, 397, 380, 589, 520, 620, 289],
                              "Var2": [74, 81, 85, 71, 102, 99, 101, 76]})
 
