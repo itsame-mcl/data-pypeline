@@ -28,5 +28,6 @@ class TestSum(unittest.TestCase):
         self.assertEqual(Pipeline(GroupBy("Cat"), Sum("Var2")).apply(self.df)["Var2_Sum"][1], 272)
         self.assertEqual(Pipeline(GroupBy("Cat"), Sum("Var2")).apply(self.df)["Var2_Sum"][2], 177)
 
+
 if __name__ == "__main__":
     unittest.main()
