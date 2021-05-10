@@ -4,6 +4,7 @@ from Summarize import Count
 from Transform import GroupBy
 from Pipeline import Pipeline
 
+
 class TestCount(unittest.TestCase):
     def setUp(self):
         self.df = DataFrame({"Id": ["01", "02", "03", "04", "05", "06", "07", "08"],
@@ -26,7 +27,6 @@ class TestCount(unittest.TestCase):
         self.assertEqual(Pipeline(GroupBy("Cat"), Count("Var2")).apply(self.df)["Var2_Count"][0], 3)
         self.assertEqual(Pipeline(GroupBy("Cat"), Count("Var2")).apply(self.df)["Var2_Count"][1], 3)
         self.assertEqual(Pipeline(GroupBy("Cat"), Count("Var2")).apply(self.df)["Var2_Count"][2], 2)
-
 
 
 if __name__ == '__main__':
