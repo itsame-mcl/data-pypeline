@@ -34,5 +34,6 @@ class TestCount(unittest.TestCase):
     def test_count_var3_without_nan_na(self):
         self.assertEqual(Count("Var3").apply(self.df)["Var3_Count"], [len(self.df["Var3"])-2])
 
+
 if __name__ == '__main__':
     unittest.main()
