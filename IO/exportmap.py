@@ -7,7 +7,7 @@ from Pipeline import Pipelineable
 
 
 class ExportMap(Pipelineable):
-    def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis'):
+    def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis', display_labels=True):
         self.__path = path
         if type_geo == "dep" or type_geo == "departement":
             self.__json_path = "data/departements.geojson"
@@ -19,6 +19,7 @@ class ExportMap(Pipelineable):
         self.__var_tomap = var_tomap
         self.__title = title
         self.__color_scale = color_scale
+        self.__display_labels = display_labels
 
     def apply(self, df):
         data = dict(zip(df[self.__var_geocode], df[self.__var_tomap]))
@@ -38,7 +39,13 @@ class ExportMap(Pipelineable):
                 color = clrs.to_hex(cols(norm(val)))
             else:
                 color = '#808080'
-            ax.add_patch(PolygonPatch(geo['geometry'], fc=color, alpha=0.5, zorder=2))
+            geo_area = PolygonPatch(geo['geometry'], fc=color, alpha=0.5, zorder=1)
+            if self.__display_labels:
+                shape = geo_area.get_window_extent()
+                cx = shape.xmin + shape.size[0]/2
+                cy = shape.ymin + shape.size[1]/2
+                ax.text(cx, cy, geo['properties']['code'], fontsize=5, ha='center')
+            ax.add_patch(geo_area)
         ax.axis([-6, 10, 40, 52])
         ax.axes.get_xaxis().set_visible(False)
         ax.axes.get_yaxis().set_visible(False)
