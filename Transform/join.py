@@ -49,8 +49,13 @@ class Join(Pipelineable):
                 known_matches[filter_str] = other_content
             else:
                 other_content = known_matches[filter_str]
-            for row in other_content:
+            if isinstance(other_content, DataFrame):
+                for row in other_content:
+                    new_row = deepcopy(base_row)
+                    new_row.extend(row)
+                    result.add_row(new_row)
+            else:
                 new_row = deepcopy(base_row)
-                new_row.extend(row)
+                new_row.extend(other_content)
                 result.add_row(new_row)
         return result
