@@ -3,7 +3,7 @@ from DataModel import DataFrame
 from Summarize import Variance
 from Transform import GroupBy
 from Pipeline import Pipeline
-from numpy import var
+from statistics import pvariance as var
 from math import sqrt
 
 

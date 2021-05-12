@@ -1,9 +1,9 @@
 import unittest
+from statistics import mean
 from DataModel import DataFrame
 from Summarize import Average
 from Transform import GroupBy
 from Pipeline import Pipeline
-from numpy import mean
 
 
 class TestAverage(unittest.TestCase):
