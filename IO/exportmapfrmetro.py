@@ -6,7 +6,7 @@ from descartes import PolygonPatch
 from Pipeline import Pipelineable
 
 
-class ExportMap(Pipelineable):
+class ExportMapFRMetro(Pipelineable):
     def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis',
                  display_labels=True, display_scale=True):
         self.__path = path

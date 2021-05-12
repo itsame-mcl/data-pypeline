@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from IO import Import, ExportCSV, ExportMap
+from IO import Import, ExportCSV, ExportMapFRMetro
 from Summarize import Sum, Average
 from Transform import AsNumeric, Rename, Select, GroupBy, Sort, Mutate, Filter, MovingAverage, KMeans
 from Pipeline import Pipeline
@@ -48,8 +48,8 @@ if __name__ == '__main__':
     moy_ma = Average('incid_hosp_MA7', 'incid_rea_MA7', 'incid_dc_MA7', 'incid_rad_MA7')
     clustering = KMeans(3, 'incid_hosp_MA7_Average', 'incid_rea_MA7_Average',
                         'incid_dc_MA7_Average', 'incid_rad_MA7_Average', random_seed=20)
-    map_cluster = ExportMap('answer_q4.png', 'departement', 'dep', 'Partition',
-                            title="Clustering sur les données de janvier 2021", display_scale=False)
+    map_cluster = ExportMapFRMetro('answer_q4.png', 'departement', 'dep', 'Partition',
+                                   title="Clustering sur les données de janvier 2021", display_scale=False)
     answer_q4 = Pipeline(num_hospit, num_rea, num_dc, num_rad, filtrer_dates, groupe_dep, moy_mobiles,
                          moy_ma, clustering, map_cluster)
     answer_q4.apply(hospit_nouveaux)  # Réponse attendue : voir carte 'docs/answer_q4.png' (avec seed=20)
