@@ -36,7 +36,7 @@ if __name__ == '__main__':
     answer_q3 = Pipeline(num_hospit, groupe_jour, total_hospit, moy_mobile,
                          tri_jour_desc, creer_index_ligne, comparer_semaines,
                          renommer_vars_hospi, selectionner_vars_hospi, calculer_evolution)
-    print(answer_q3.apply(hospit_nouveaux)['Evolution', 0])  # Réponse attendue : -0.5937 %
+    print(answer_q3.apply(hospit_nouveaux)['Evolution', 0])  # Réponse attendue : -0.5937499999999977 (%)
 
     # Quel est le résultat de k-means avec k=3 sur les données des départements du mois de Janvier 2021,
     # lissées avec une moyenne glissante de 7 jours ?
