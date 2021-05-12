@@ -3,7 +3,7 @@ from DataModel import DataFrame
 from Transform import Join
 
 
-class TestGroupBy(unittest.TestCase):
+class TestJoin(unittest.TestCase):
     def setUp(self):
         self.df1 = DataFrame({'Reg': ["1", "2", "3", "4", "5", "6", "7", "8", "9", "9"],
                              'Var1': [10, 14, 13, 22, 28, 23, 30, 6, 8, 9],
