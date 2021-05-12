@@ -18,6 +18,7 @@ class Mutate(TransformOnGroups):
                 new_vars[new_var] = []
         for i in range(len(result)):
             row_dict = result.row_as_dict(i)
+            row_dict['row_index'] = i
             for new_var in list(new_vars.keys()):
                 new_val = None
                 try:
