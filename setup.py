@@ -10,6 +10,7 @@ setup(
     version='0.1',
     author='GENIN Alanna, LAGALLE Maxence, RAMBAUT Coline',
     author_email='alanna.genin@eleve.ensai.fr, maxence.lagalle@eleve.ensai.fr, coline.rambaut@eleve.ensai.fr',
+    description='Pure Python 3 data wrangling tools with support for pipelines',
     long_description=long_description,
     long_description_content_type='text/markdown',
     classifiers=[

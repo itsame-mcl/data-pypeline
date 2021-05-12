@@ -7,7 +7,8 @@ from Pipeline import Pipelineable
 
 
 class ExportMap(Pipelineable):
-    def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis', display_labels=True):
+    def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis',
+                 display_labels=True, display_scale=True):
         self.__path = path
         if type_geo == "dep" or type_geo == "departement":
             self.__json_path = "data/departements.geojson"
@@ -20,6 +21,7 @@ class ExportMap(Pipelineable):
         self.__title = title
         self.__color_scale = color_scale
         self.__display_labels = display_labels
+        self.__display_scale = display_scale
 
     def apply(self, df):
         data = dict(zip(df[self.__var_geocode], df[self.__var_tomap]))
@@ -30,7 +32,8 @@ class ExportMap(Pipelineable):
         cols = plt.get_cmap(self.__color_scale)
         norm = clrs.Normalize()
         norm.autoscale(list(data.values()))
-        fig.colorbar(cm.ScalarMappable(norm=norm, cmap=cols), ax=ax)
+        if self.__display_scale:
+            fig.colorbar(cm.ScalarMappable(norm=norm, cmap=cols), ax=ax)
         with open(self.__json_path) as json_file:
             geo_data = geojson.load(json_file)
         for geo in geo_data['features']:
