@@ -16,6 +16,7 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
+        'License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)',
         'Programming Language :: Python :: 3 :: Only'
         ],
     python_requires='>=3.6, <4',
