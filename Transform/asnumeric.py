@@ -11,12 +11,15 @@ class AsNumeric(OnVars):
 
     @staticmethod
     def __num(val):
-        try:
-            return int(val)
-        except ValueError:
+        if not (isinstance(val, int)) and not (isinstance(val, float)):
             try:
-                return float(val)
+                return int(val)
+            except ValueError:
+                try:
+                    return float(val)
+                except Exception as e:
+                    raise e
             except Exception as e:
                 raise e
-        except Exception as e:
-            raise e
+        else:
+            return val
