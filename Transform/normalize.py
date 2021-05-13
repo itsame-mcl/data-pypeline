@@ -5,6 +5,27 @@ from copy import deepcopy
 
 
 class Normalize(OnVars, TransformOnGroups):
+    """
+    Normalize variables in a DataFrame, by taking into account the group structure.
+
+    ...
+
+    Attributes
+    ----------
+    self.__center : bool
+        If True, will center the variable
+    self.__reduce : bool
+        If True, will reduce the variable
+
+    Methods
+    -------
+    __init__(*on_vars, center=True, reduce=True)
+        Setup the Normalization process on all listed variables, and define if the variables will be centred
+        and reduced. If both (default), the variable will be normalized.
+    _operation(group_df) : DataFrame
+        Performs the normalization on group_df DataFrame for specified variables and return a new DataFrame
+        with the normalized variables inserted after the original ones, and named "Variable_Std"
+    """
     def __init__(self, *on_vars, center=True, reduce=True):
         super().__init__(*on_vars)
         self.__center = center
