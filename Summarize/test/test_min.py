@@ -1,11 +1,11 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Summarize import Min
 from Transform import GroupBy
 from Pipeline import Pipeline
 
 
-class TestMin(unittest.TestCase):
+class TestMin(TestCase):
     def setUp(self):
         self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [348, 402, 397, 380, 589, 520, 620, 289],
@@ -26,7 +26,3 @@ class TestMin(unittest.TestCase):
         self.assertEqual(Pipeline(GroupBy("Cat"), Min("Var2")).apply(self.df)["Var2_Min"][0], 74)
         self.assertEqual(Pipeline(GroupBy("Cat"), Min("Var2")).apply(self.df)["Var2_Min"][1], 71)
         self.assertEqual(Pipeline(GroupBy("Cat"), Min("Var2")).apply(self.df)["Var2_Min"][2], 76)
-
-
-if __name__ == "__main__":
-    unittest.main()

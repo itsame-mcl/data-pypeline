@@ -1,8 +1,8 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import AsNumeric
 
-class TestAsNumeric(unittest.TestCase):
+class TestAsNumeric(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -18,6 +18,3 @@ class TestAsNumeric(unittest.TestCase):
         transformation = AsNumeric('VarTextNum')
         result = transformation.apply(self.df)['VarTextNum']
         self.assertEqual(result,[5, 8, -1, 0, 7.4, 11.9, -8.44, 5, -4.8, 9.2])
-
-if __name__ == '__main__':
-    unittest.main()

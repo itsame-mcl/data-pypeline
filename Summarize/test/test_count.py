@@ -1,11 +1,11 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Summarize import Count
 from Transform import GroupBy
 from Pipeline import Pipeline
 
 
-class TestCount(unittest.TestCase):
+class TestCount(TestCase):
     def setUp(self):
         self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [348, 402, 397, 380, 589, 520, 620, 289],
@@ -34,7 +34,3 @@ class TestCount(unittest.TestCase):
 
     def test_count_var3_without_nan_na(self):
         self.assertEqual(Count("Var3").apply(self.df)["Var3_Count"], [len(self.df["Var3"])-2])
-
-
-if __name__ == '__main__':
-    unittest.main()

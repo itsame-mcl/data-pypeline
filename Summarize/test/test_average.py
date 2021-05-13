@@ -1,4 +1,4 @@
-import unittest
+from unittest import TestCase
 from statistics import mean
 from DataModel import DataFrame
 from Summarize import Average
@@ -6,7 +6,7 @@ from Transform import GroupBy
 from Pipeline import Pipeline
 
 
-class TestAverage(unittest.TestCase):
+class TestAverage(TestCase):
     def setUp(self):
         self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [98, 100, 102, 100, 200, 150, 620, 40],
@@ -27,7 +27,3 @@ class TestAverage(unittest.TestCase):
         self.assertEqual(Pipeline(GroupBy("Cat"), Average("Var2")).apply(self.df)["Var2_Average"][0], 80.0)
         self.assertEqual(Pipeline(GroupBy("Cat"), Average("Var2")).apply(self.df)["Var2_Average"][1], 91.0)
         self.assertEqual(Pipeline(GroupBy("Cat"), Average("Var2")).apply(self.df)["Var2_Average"][2], 88.5)
-
-
-if __name__ == '__main__':
-    unittest.main()

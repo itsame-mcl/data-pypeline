@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Select
 
 
-class TestSelect(unittest.TestCase):
+class TestSelect(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -24,7 +24,3 @@ class TestSelect(unittest.TestCase):
         multiple_vars = Select('Var2', 'VarMixed', 'Date', 'Var1', 'VarNone')
         result = multiple_vars.apply(self.df)
         self.assertEqual([209, "Null", "2021-03-03", 13, None], result[None, 2])
-
-
-if __name__ == '__main__':
-    unittest.main()

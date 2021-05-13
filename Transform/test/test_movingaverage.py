@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import MovingAverage
 
 
-class TestMovingAverage(unittest.TestCase):
+class TestMovingAverage(TestCase):
     def setUp(self):
         self.df = DataFrame({'Dep': ["1", "1", "1", "1", "1", "2", "2", "2", "2", "2"],
                              'Jour': ["2021-01-01", "2021-01-02", "2021-01-03", "2021-01-04",
@@ -24,7 +24,3 @@ class TestMovingAverage(unittest.TestCase):
         group_ma = MovingAverage(3, 'Jour', 'Var')
         result = group_ma.apply(self.df)
         self.assertEqual([None, None, 234, 271, 298, None, None, 84, 82, 77], result['Var_MA3'])
-
-
-if __name__ == '__main__':
-    unittest.main()

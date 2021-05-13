@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import GroupBy
 
 
-class TestGroupBy(unittest.TestCase):
+class TestGroupBy(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -25,7 +25,3 @@ class TestGroupBy(unittest.TestCase):
         set_two_groups = GroupBy('Cat', 'Reg')
         result = set_two_groups.apply(self.df)
         self.assertEqual(result.groups, [1, 1, 2, 3, 3, 4, 4, 5, 6, 6])
-
-
-if __name__ == '__main__':
-    unittest.main()

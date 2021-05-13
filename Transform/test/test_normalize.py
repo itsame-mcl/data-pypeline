@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Normalize
 
 
-class TestNormalize(unittest.TestCase):
+class TestNormalize(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -29,7 +29,3 @@ class TestNormalize(unittest.TestCase):
         result = normalize.apply(self.df)
         self.assertAlmostEqual(-1.0020384, result['Var1_Std', 8])
         self.assertAlmostEqual(0.12525508, result['Var2_Std', 0])
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Join
 
 
-class TestJoin(unittest.TestCase):
+class TestJoin(TestCase):
     def setUp(self):
         self.df1 = DataFrame({'Reg': ["1", "2", "3", "4", "5", "6", "7", "8", "9", "9"],
                              'Var1': [10, 14, 13, 22, 28, 23, 30, 6, 8, 9],
@@ -20,7 +20,3 @@ class TestJoin(unittest.TestCase):
         result = join_tables.apply(self.df1)
         self.assertEqual(["A", "B", "C", "D", "E", "Ebis", None, "G", "H", "I", "I"], result["Nom"])
         self.assertEqual(['Reg','Var1','Var2','VarNone','VarMixed','VarTextNum','Nom','Y_Var1'], result.vars)
-
-
-if __name__ == '__main__':
-    unittest.main()

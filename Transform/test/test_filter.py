@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Filter
 
 
-class TestFilter(unittest.TestCase):
+class TestFilter(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -29,6 +29,3 @@ class TestFilter(unittest.TestCase):
         simple_nonequal_filter = Filter(Var1=">10")
         result = simple_nonequal_filter.apply(self.df)
         self.assertEqual(result['Var1'], [14, 13, 22, 28, 23, 30])
-
-if __name__ == '__main__':
-    unittest.main()

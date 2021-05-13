@@ -1,11 +1,11 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Summarize import Max
 from Transform import GroupBy
 from Pipeline import Pipeline
 
 
-class TestMax(unittest.TestCase):
+class TestMax(TestCase):
     def setUp(self):
         self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [348, 402, 397, 380, 589, 520, 620, 289],
@@ -26,7 +26,3 @@ class TestMax(unittest.TestCase):
         self.assertEqual(Pipeline(GroupBy("Cat"), Max("Var2")).apply(self.df)["Var2_Max"][0], 85)
         self.assertEqual(Pipeline(GroupBy("Cat"), Max("Var2")).apply(self.df)["Var2_Max"][1], 102)
         self.assertEqual(Pipeline(GroupBy("Cat"), Max("Var2")).apply(self.df)["Var2_Max"][2], 101)
-
-
-if __name__ == "__main__":
-    unittest.main()

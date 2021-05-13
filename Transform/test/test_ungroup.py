@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Ungroup
 
 
-class TestUngroup(unittest.TestCase):
+class TestUngroup(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -15,7 +15,3 @@ class TestUngroup(unittest.TestCase):
 
     def test_ungroup(self):
         self.assertEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Ungroup().apply(self.df).groups)
-
-
-if __name__ == '__main__':
-    unittest.main()

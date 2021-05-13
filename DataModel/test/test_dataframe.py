@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 
 
 # noinspection PyTypeChecker
-class TestDataFrame(unittest.TestCase):
+class TestDataFrame(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -33,7 +33,3 @@ class TestDataFrame(unittest.TestCase):
 
     def test_lenDataFrame(self):
         self.assertEqual(len(self.df), 10)
-
-
-if __name__ == '__main__':
-    unittest.main()

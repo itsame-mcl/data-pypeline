@@ -1,11 +1,11 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Summarize import Sum
 from Transform import GroupBy
 from Pipeline import Pipeline
 
 
-class TestSum(unittest.TestCase):
+class TestSum(TestCase):
     def setUp(self):
         self.df = DataFrame({"Cat": ["A", "A", "A", "B", "B", "B", "C", "C"],
                              "Var1": [348, 402, 397, 380, 589, 520, 620, 289],
@@ -26,7 +26,3 @@ class TestSum(unittest.TestCase):
         self.assertEqual(Pipeline(GroupBy("Cat"), Sum("Var2")).apply(self.df)["Var2_Sum"][0], 240)
         self.assertEqual(Pipeline(GroupBy("Cat"), Sum("Var2")).apply(self.df)["Var2_Sum"][1], 272)
         self.assertEqual(Pipeline(GroupBy("Cat"), Sum("Var2")).apply(self.df)["Var2_Sum"][2], 177)
-
-
-if __name__ == "__main__":
-    unittest.main()

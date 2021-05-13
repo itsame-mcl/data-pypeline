@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Sort
 
 
-class TestMutate(unittest.TestCase):
+class TestMutate(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -29,7 +29,3 @@ class TestMutate(unittest.TestCase):
         multiple_sort = Sort('Date', 'Var1')
         result = multiple_sort.apply(self.df)
         self.assertEqual([74, 250, 360, 78, 245, 328, 80, 209, 359, 372], result['Var2'])
-
-
-if __name__ == '__main__':
-    unittest.main()

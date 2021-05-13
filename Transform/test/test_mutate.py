@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Mutate
 
 
-class TestMutate(unittest.TestCase):
+class TestMutate(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -30,7 +30,3 @@ class TestMutate(unittest.TestCase):
         leads_with_goups = Mutate(Var5='Var2+lead_Var2')
         result = leads_with_goups.apply(self.df)
         self.assertEqual([495, 454, None, 688, 687, 731, None, 152, 158, None], result['Var5'])
-
-
-if __name__ == '__main__':
-    unittest.main()

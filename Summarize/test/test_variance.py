@@ -1,4 +1,4 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Summarize import Variance
 from Transform import GroupBy
@@ -7,7 +7,7 @@ from statistics import pvariance as var
 from math import sqrt
 
 
-class TestVariance(unittest.TestCase):
+class TestVariance(TestCase):
     def setUp(self):
         self.df = DataFrame({"Cat": ["A", "A", "A", "A", "B", "B", "B", "B"],
                              "Var1": [10, 10, 10, 10, 10, 10, 10, 10],
@@ -40,7 +40,3 @@ class TestVariance(unittest.TestCase):
     def test_sd_var2_without_variance_group_by(self):
         self.assertEqual(Pipeline(GroupBy("Cat"), Variance("Var2", get_var=False)).apply(self.df)["Var2_SD"][0], 0.50)
         self.assertEqual(Pipeline(GroupBy("Cat"), Variance("Var2", get_var=False)).apply(self.df)["Var2_SD"][1], 0)
-
-
-if __name__ == '__main__':
-    unittest.main()

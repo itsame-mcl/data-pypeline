@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from DataModel import DataFrame
 from Transform import Rename
 
 
-class TestRename(unittest.TestCase):
+class TestRename(TestCase):
     def setUp(self):
         self.df = DataFrame({'Cat': ["A", "A", "A", "B", "B", "B", "B", "C", "C", "C"],
                              'Date': ["2021-03-01", "2021-03-02", "2021-03-03",
@@ -18,7 +18,3 @@ class TestRename(unittest.TestCase):
         renames = Rename(Variable4='Var1', Experiment='VarMixed', Category='Cat', TextField='VarTextNum')
         result = renames.apply(self.df)
         self.assertEqual(['Category', 'Date', 'Variable4', 'Var2', 'Experiment', 'TextField'], result.vars)
-
-
-if __name__ == '__main__':
-    unittest.main()
