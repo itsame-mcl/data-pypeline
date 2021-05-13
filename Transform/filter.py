@@ -7,6 +7,7 @@ class Filter(TransformOnGroups):
     Filter a DataFrame by taking into account one or more criteria and the group structure.
 
     ...
+
     Attributes
     ----------
     self.__criteria : dict

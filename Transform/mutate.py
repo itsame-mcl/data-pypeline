@@ -7,6 +7,7 @@ class Mutate(TransformOnGroups):
     Create new variables in a DataFrame by taking into account the group structure.
 
     ...
+
     Attributes
     ----------
     self.__expressions : dict
