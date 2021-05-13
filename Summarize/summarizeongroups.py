@@ -6,6 +6,26 @@ from Transform import Select, GroupBy
 
 
 class SummarizeOnGroups(OnVars, OnGroups, ABC):
+    """
+    Splits data according to groups (if specified) then paste results together in the form of a DataFrame.
+
+    Attributes
+    ----------
+    __del_na : bool
+        indicates if we delete NAs or not, by default NA are removed
+    __del_nan : bool
+        indicates if we delete NaNs or not, by default NaNs are removed
+
+    Methods
+    -------
+    apply(df) : DataFrame
+        The apply method manages the splitting of the data according to the group
+        provided by the user. If no group is specified, we assume that the input data
+        represents a single group. Data are transmitted to the _operation method which
+        carries out the calculations needed (average, min, max and so on).
+        Finally, the apply method reassembles the results before returning them in
+        the form of a DataFrame.
+    """
     def __init__(self, *on_vars, delete_na=True, delete_nan=True):
         super().__init__(*on_vars)
         self.__del_na = delete_na
