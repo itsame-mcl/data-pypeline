@@ -39,7 +39,7 @@ class ExportMapFRMetro(Pipelineable):
         type_geo must be set to "dep" or "departement" for a map at departmental scale or to "reg" or
         "region" for a map at regional scale.
 
-    apply(df)
+    apply(df) : DataFrame
         Takes the DataFrame df and exports it as map image file
     """
     def __init__(self, path, type_geo, var_geocode, var_tomap, title=None, color_scale='viridis',

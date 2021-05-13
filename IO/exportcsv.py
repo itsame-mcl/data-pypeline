@@ -24,7 +24,7 @@ class ExportCSV(Pipelineable):
     -------
     __init__(path, headers=True, delimiter=";", encoding='ISO-8859-1')
         Create an ExportCSV pipelinable object and define the specifications of the future CSV file.
-    apply(df)
+    apply(df) : DataFrame
         Takes the DataFrame df and exports it as CSV file
     """
     def __init__(self, path, headers=True, delimiter=";", encoding='ISO-8859-1'):
