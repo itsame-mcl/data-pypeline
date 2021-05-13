@@ -3,6 +3,21 @@ from copy import deepcopy
 
 
 class AsNumeric(OnVars):
+    """
+    Transform strings to numeric values.
+
+    ...
+
+    Methods
+    -------
+    apply(df) : DataFrame
+        Transforms each specified variable of the DataFrame df in a numeric form
+        Raises Exception if any value can't be transformed into an int or a float
+
+    __num(val) : int or float
+        Returns val as int if possible, or as float
+        Raises ValueError if val can't be converted into int or float
+    """
     def apply(self, df):
         result = deepcopy(df)
         for var in self.vars:

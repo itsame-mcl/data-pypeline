@@ -3,6 +3,22 @@ from DataModel import DataFrame
 
 
 class Filter(TransformOnGroups):
+    """
+    Filter a DataFrame by taking into account one or more criteria and the group structure.
+
+    ...
+
+    Methods
+    -------
+    __init__(**criteria):
+        Create a Filter object with criteria as key/values pairs. On each pair, the key is the name of the
+        variable and the value is a string of the exact Python syntax of the test, such as "==1" to test if
+        a variable is equal to numeric 1, or "=='Cat'" to test if a variable is equal to string 'Cat'.
+        All of the critera must be checked in order to select a line. Lagged and leaded values are available.
+
+    _operation(df): DataFrame
+        Apply the filter to a group DataFrame, and returns a new DataFrame, keeping only the matching rows.
+    """
     def __init__(self, **criteria):
         if any(not isinstance(criterion, str) for criterion in list(criteria.values())):
             raise TypeError
