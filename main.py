@@ -40,9 +40,7 @@ if __name__ == '__main__':
 
     # Quel est le résultat de k-means avec k=3 sur les données des départements du mois de Janvier 2021,
     # lissées avec une moyenne glissante de 7 jours ?
-    num_rea = AsNumeric('incid_rea')
-    num_dc = AsNumeric('incid_dc')
-    num_rad = AsNumeric('incid_rad')
+    num_data = AsNumeric('incid_hosp', 'incid_rea', 'incid_dc', 'incid_rad')
     filtrer_dates = Filter(jour=">= '2020-12-26' and jour <= '2021-01-31'")
     moy_mobiles = MovingAverage(7, 'jour', 'incid_hosp', 'incid_rea', 'incid_dc', 'incid_rad')
     moy_ma = Average('incid_hosp_MA7', 'incid_rea_MA7', 'incid_dc_MA7', 'incid_rad_MA7')
@@ -50,7 +48,7 @@ if __name__ == '__main__':
                         'incid_dc_MA7_Average', 'incid_rad_MA7_Average', random_seed=20)
     map_cluster = ExportMapFRMetro('answer_q4.png', 'departement', 'dep', 'Partition',
                                    title="Clustering sur les données de janvier 2021", display_scale=False)
-    answer_q4 = Pipeline(num_hospit, num_rea, num_dc, num_rad, filtrer_dates, groupe_dep, moy_mobiles,
+    answer_q4 = Pipeline(num_data, filtrer_dates, groupe_dep, moy_mobiles,
                          moy_ma, clustering, map_cluster)
     answer_q4.apply(hospit_nouveaux)  # Réponse attendue : voir carte 'docs/answer_q4.png' (avec seed=20)
 
@@ -63,6 +61,7 @@ if __name__ == '__main__':
                                                '%Y-%m-%d')
     filtrer_sem_apres_toussaint = Filter(jour=">='" + fin_toussaint + "' and jour <= '" +
                                               fin_toussaint_plus1sem + "'")
+    num_rea = AsNumeric('incid_rea')
     somme_rea = Sum('incid_rea')
     answer_q5 = Pipeline(num_rea, filtrer_sem_apres_toussaint, somme_rea)
     print(answer_q5.apply(hospit_nouveaux)['incid_rea_Sum', 0])  # Réponse attendue : 3521
