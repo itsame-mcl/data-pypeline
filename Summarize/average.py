@@ -11,6 +11,7 @@ class Average(SummarizeOnGroups):
         -------
         _operation(col) : dict
             Calculates the average on the col object, assuming this DataFrame represents a single group
+            The output variable is called "Variable_Average" (if col = Variable).
         """
     def _operation(self, col):
         partial_average = None
