@@ -6,6 +6,34 @@ from math import sqrt
 
 
 class KMeans(OnVars, TransformOnGroups):
+    """
+    Use the Lloyd algorithm to perform a K-Means clustering on a DataFrame, by taking into account
+    the group structure.
+
+    ...
+
+    Attributes
+    ----------
+    self.__clusters : int
+        Number of clusters to define on the partition
+    self.__normalize : bool
+        If true, will normalize data before performing the algorithm
+    self.__max_iter : int
+        Sets the maximum number of iterations for the Lloyd algorithm
+    self.__seed : int
+        If not None, fixes the random seed for the class centers initialization
+
+    Methods
+    -------
+    __init__(clusters, *on_vars, normalize=True, max_iter=1000, random_seed=None)
+        Setup the KMeans by defining the numbers of clusters, the variables to use for the classification,
+        and the normalization, iterations and random_seed options.
+    _operation(group_df) : DataFrame
+        Performs the Lloyd algorithm on the group_df DataFrame, and returns a new DataFrame with a column
+        Partition, indicating the partition index (starting at 0) of each row.
+    __euclidean_distance(point_x, point_y) : float
+        Returns the euclidean distance between point_x and point_y
+    """
     def __init__(self, clusters, *on_vars, normalize=True, max_iter=1000, random_seed=None):
         super().__init__(*on_vars)
         self.__clusters = clusters
