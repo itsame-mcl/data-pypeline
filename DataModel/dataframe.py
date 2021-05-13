@@ -3,7 +3,79 @@ from copy import deepcopy
 
 
 class DataFrame:
+    """
+    A 2 dimensions DataFrame.
 
+    ...
+
+    Attributes
+    ----------
+    self.__groups : list
+        Ordered list of variables names defining the group structure of the DataFrame.
+    self.__columns : list
+        Ordered list of the variables names on the DataFrame.
+    self.__data : dict
+        Data container, with variable names as keys, and lists as values.
+
+    Methods
+    -------
+    __init__(data=None)
+        Create an empty (if data is None) or already filled DataFrame (if data is a dict).
+    __str__
+        Gives a string representation of the DataFrame, displaying it's group structure ans 5 first data lines.
+    __len__ : int
+        Returns the number of lines in the DataFrame.
+    __getitem__(item) : Object
+        Returns a column (if item is a string or an int), a line (if item is a tuple with None as first value
+        and an int as second value) or a value (if item is a tuple with a string or an int as first value and
+        an int as second value) of the DataFrame.
+    __setitem__(key, value)
+        Sets to value a column (if key is a string or an int), a line (if key is a tuple with None as first
+        value and an int as second value) or a value (if key is a tuple with a string or an int as first value
+        and an int as second value) of the DataFrame.
+    __iter__ : Iterator
+        Gets an iterator on the lines of the DataFrame.
+    __next__ : list
+        Gets the next line of the DataFrame.
+    dict : dict
+        Returns a dict representation of the DataFrame.
+    vars : list
+        Returns the list of the variables names in the DataFrame.
+    shape : (int, int)
+        Returns a tuple with the number of columns and number of lines of the DataFrame.
+    groups : list
+        Returns a list with the group identifier of each line of the DataFrame.
+    groups_vars : list
+        Returns an ordered list of the variables representing the group structure of the DataFrame.
+    groups_df : [DataFrame]
+        Returns a list of DataFrames, with one DataFrame per group.
+    add_column(name, content=None, after=None, before=None)
+        Insert a new column in the DataFrame, with name as name and a list of None (if content is None) or
+        content as content. If after or before is specified with a string or an int, the column is inserted
+        after or before the specified column. Otherwise, the column is inserted at the end of the DataFrame.
+    add_row(content=None, after=None, before=None)
+        Insert a new line in the DataFrame, with a list of None (if content is None) or content as content.
+        If after or before is specified with an int, the line is inserted after or before the specified line.
+        Otherwise, the line is inserted at the end of the DataFrame.
+    add_group(name, level=None)
+        Insert the name variable in the DataFrame's group structure. If level is None, the variable is inserted
+        at the last level on the group structure, otherwise, the variable is inserted at the level index.
+    rename_column(old_name, new_name)
+        Changes the name of the old_name column to new_name.
+    del_column(name)
+        Delete the column with the specified name.
+    del_row(index)
+        Delete the line with the specified index.
+    del_group(name)
+        Removes the name variable of the group structure.
+    row_as_dict(index, with_lag=True, with_lead=True)
+        Returns the contents of the line of the specified index as a dict, with the variables names as keys
+        and the values on the line as values. If with_lag is True, returns also in the same dict the variables
+        of the previous line with "variable_lag" as keys and the values of the previous line as values, or
+        None as values if there isn't any previous line. If with_lead is True, returns also in the same dict the
+        variables of the next line with "variable_lead" as keys and the values of the next line as values, or
+        None as values if there isn't any next line.
+    """
     def __init__(self, data=None):
         """
         Create a new DataFrame object from scratch or based on a dict with one key per column
