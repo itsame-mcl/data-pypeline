@@ -10,9 +10,9 @@ class Variance(SummarizeOnGroups):
 
         Attributes
         ----------
-        get_var : bool
+        __get_var : bool
             boolean indicating if variance is calculated or not
-        get_sd : bool
+        __get_sd : bool
             boolean indicating if standard deviation is calculated or not
 
         Methods
