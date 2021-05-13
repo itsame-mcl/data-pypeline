@@ -9,6 +9,8 @@ class SummarizeOnGroups(OnVars, OnGroups, ABC):
     """
     Splits data according to groups (if specified) then paste results together in the form of a DataFrame.
 
+    ...
+
     Attributes
     ----------
     __del_na : bool
