@@ -5,6 +5,28 @@ from copy import deepcopy
 
 
 class Join(Pipelineable):
+    """
+    Performs a left join transformation between two DataFrames.
+
+    The right join should be performed by inverting left hand and right hand, the full join by performing
+    both left and right join and computing the union between the results and the inner join by performing
+    both left and right joint and computing the intersection between the results.
+
+    ...
+
+    Methods
+    -------
+
+    __init__(other, **matches)
+        Create the Join object, with other as right hand DataFrame, and the matching criteria as key/values pairs.
+        The key is the name of a variable in the right hand, and the value is the name of the matching variable
+        in the left hand as string.
+
+    apply(df): DataFrame
+        Execute the left join operation with DataFrame df as left hand. Returns a new DataFrame, with all left
+        hand variables and the non matching variables of the right hand DataFrame. If a variable exists in both,
+        the right hand one will be renamed as "Y_Variable".
+    """
     def __init__(self, other, **matches):
         """
         Define the left join transformation

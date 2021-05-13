@@ -3,6 +3,16 @@ from copy import deepcopy
 
 
 class GroupBy(OnVars):
+    """
+    Add variables to the group structure of a DataFrame.
+
+    ...
+
+    Methods
+    -------
+    apply(df) : DataFrame
+        Add the variables of the GroupBy object to the DataFrame df, and returns the new DataFrame
+    """
     def apply(self, df):
         result = deepcopy(df)
         for var in self.vars:
