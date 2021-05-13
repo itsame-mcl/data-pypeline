@@ -4,6 +4,30 @@ from Transform import TransformOnGroups, Sort
 
 
 class MovingAverage(OnVars, TransformOnGroups):
+    """
+    Compute a moving average for a list of variables on a DataFrame, by taking into account it's group structure.
+
+    ...
+
+    Attributes
+    ----------
+    self.__window : int
+        Window size for the moving average, as a number of lines
+    self.__time_var : str
+        Name of the variable giving the time information, to sort the DataFrame
+
+    Methods
+    -------
+    __init__(window, time_var, *on_vars)
+        Setup the MovingAverage computation by defining window size, the time variable (time_var) and the
+        variables for which the moving average should be calculated.
+
+    _operation(group_df): DataFrame
+        Performs the computation on each group_df DataFrame, by sorting them with respect of the time_var
+        variable, and inserts columns named "Variable_MA<Window>" with the results, for example "Val_MA5" for
+        a moving average of window 5 on the variable Val. When a value can't be computed by lack of data, a
+        None value is inserted.
+    """
     def __init__(self, window, time_var, *on_vars):
         super().__init__(*on_vars)
         if isinstance(window, int):
