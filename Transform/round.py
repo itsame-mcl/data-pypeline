@@ -17,21 +17,10 @@ class Round(OnVars):
     -------
     apply(df) : DataFrame
         Rounds each variable of a DataFrame df to a given precision
-
     """
     def __init__(self, *on_vars, precision=2):
         super().__init__(*on_vars)
         self.__precision = precision
-
-    # def apply(self, df):
-    #     rounded = []
-    #     for var in self.vars:
-    #         for val in df[var]:
-    #             if val is None:
-    #                 rounded.append(None)
-    #             else:
-    #                 rounded.append(float(int((val * 10 ** self.__precision))) / (10 ** self.__precision))
-    #     return rounded
 
     def apply(self, df):
         result = deepcopy(df)
