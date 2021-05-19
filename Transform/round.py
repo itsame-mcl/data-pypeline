@@ -23,8 +23,18 @@ class Round(OnVars):
         super().__init__(*on_vars)
         self.__precision = precision
 
+    # def apply(self, df):
+    #     rounded = []
+    #     for var in self.vars:
+    #         for val in df[var]:
+    #             if val is None:
+    #                 rounded.append(None)
+    #             else:
+    #                 rounded.append(float(int((val * 10 ** self.__precision))) / (10 ** self.__precision))
+    #     return rounded
+
     def apply(self, df):
         result = deepcopy(df)
         for var in self.vars:
-            result[var] = [float(int((val * 10 ** self.__precision))) / (10 ** self.__precision) for val in df[var]]
+            result[var] = [float(int((val * 10 ** self.__precision))) / (10 ** self.__precision) if val is not None else None for val in df[var]]
         return result

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from IO import Import, ExportCSV, ExportMapFRMetro
 from Summarize import Sum, Average
-from Transform import AsNumeric, Rename, Select, GroupBy, Sort, Mutate, Filter, MovingAverage, KMeans
+from Transform import AsNumeric, Rename, Select, GroupBy, Sort, Mutate, Filter, MovingAverage, KMeans, Round
 from Pipeline import Pipeline
 
 
@@ -33,10 +33,11 @@ if __name__ == '__main__':
     renommer_vars_hospi = Rename(Hospi='incid_hosp_Sum', MoyMobile='incid_hosp_Sum_MA7')
     selectionner_vars_hospi = Select('jour', 'Hospi', 'MoyMobile')
     calculer_evolution = Mutate(Evolution='100*(MoyMobile-lead_MoyMobile)/lead_MoyMobile')
+    arrondi = Round('MoyMobile', 'Evolution', precision=4)
     answer_q3 = Pipeline(num_hospit, groupe_jour, total_hospit, moy_mobile,
                          tri_jour_desc, creer_index_ligne, comparer_semaines,
-                         renommer_vars_hospi, selectionner_vars_hospi, calculer_evolution)
-    print(answer_q3.apply(hospit_nouveaux)['Evolution', 0])  # Réponse attendue : -0.5937499999999977 (%)
+                         renommer_vars_hospi, selectionner_vars_hospi, calculer_evolution, arrondi)
+    print(answer_q3.apply(hospit_nouveaux)['Evolution', 0])  # Réponse attendue : -0.5937 (%)
 
     # Quel est le résultat de k-means avec k=3 sur les données des départements du mois de Janvier 2021,
     # lissées avec une moyenne glissante de 7 jours ?
