@@ -21,7 +21,7 @@ class ExportMapFRMetro(Pipelineable):
     self.__var_geocode : str
         Name of the variable with the geographic codes in the DataFrame
     self.__var_tomap : str
-        Name of the vairable with the values to display in the map
+        Name of the variable with the values to display in the map
     self.__title : str
         Title of the map
     self.__color_scale : str
