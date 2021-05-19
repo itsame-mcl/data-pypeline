@@ -11,3 +11,4 @@ from .sort import *
 from .movingaverage import *
 from .normalize import *
 from .kmeans import KMeans
+from .round import *
