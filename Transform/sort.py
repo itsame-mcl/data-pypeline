@@ -1,6 +1,7 @@
 from Pipeline import OnVars
 from Transform import TransformOnGroups
 from DataModel import DataFrame
+from sys import setrecursionlimit, getrecursionlimit
 
 
 class Sort(OnVars, TransformOnGroups):
@@ -47,7 +48,10 @@ class Sort(OnVars, TransformOnGroups):
             if is_desc:
                 index_criterion *= -1
             index_criteria.append(index_criterion)
+        default_recursion_limit = getrecursionlimit()
+        setrecursionlimit(len(group_df)+10)
         sorted_group_list = Sort.__merge_sort(nested_group_list, index_criteria)
+        setrecursionlimit(default_recursion_limit)
         result = DataFrame()
         for var in group_df.vars:
             result.add_column(var)
