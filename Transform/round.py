@@ -25,5 +25,5 @@ class Round(OnVars):
     def apply(self, df):
         result = deepcopy(df)
         for var in self.vars:
-            result[var] = [float(int((val * 10 ** self.__precision))) / (10 ** self.__precision) if val is not None else None for val in df[var]]
+            result[var] = [float(int((val * 10 ** self.__precision)+0.5)) / (10 ** self.__precision) if val is not None else None for val in df[var]]
         return result
