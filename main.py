@@ -13,7 +13,8 @@ if __name__ == '__main__':
     num_hospit = AsNumeric('incid_hosp')
     total_hospit = Sum('incid_hosp')
     answer_q1 = Pipeline(num_hospit, total_hospit)
-    print(answer_q1.apply(hospit_nouveaux)['incid_hosp_Sum', 0])  # Réponse attendue : 366449
+    print("Il y a eu", answer_q1.apply(hospit_nouveaux)['incid_hosp_Sum', 0],
+          "hospitalisations dues au Covid-19.")  # Réponse attendue : 366449
 
     # Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
     groupe_dep = GroupBy('dep')
@@ -36,8 +37,11 @@ if __name__ == '__main__':
     arrondi = Round('MoyMobile', 'Evolution', precision=4)
     answer_q3 = Pipeline(num_hospit, groupe_jour, total_hospit, moy_mobile,
                          tri_jour_desc, creer_index_ligne, comparer_semaines,
-                         renommer_vars_hospi, selectionner_vars_hospi, calculer_evolution, arrondi)
-    print(answer_q3.apply(hospit_nouveaux)['Evolution', 0])  # Réponse attendue : -0.5937 (%)
+                         renommer_vars_hospi, selectionner_vars_hospi, calculer_evolution,
+                         arrondi)
+    print("L'évolution des nouvelles hospitalisations journalières par rapport à la "
+          "semaine précédente est de : ", answer_q3.apply(hospit_nouveaux)['Evolution', 0],
+          "%", sep="")  # Réponse attendue : -0.5936 (%)
 
     # Quel est le résultat de k-means avec k=3 sur les données des départements du mois de Janvier 2021,
     # lissées avec une moyenne glissante de 7 jours ?
@@ -53,7 +57,7 @@ if __name__ == '__main__':
                          moy_ma, clustering, map_cluster)
     answer_q4.apply(hospit_nouveaux)  # Réponse attendue : voir carte 'docs/answer_q4.png' (avec seed=20)
 
-    # Combien de nouvelles admissions en réanimation ont eu lieupendant la semaine suivant les
+    # Combien de nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les
     # vacances de la Toussaint de 2020 ?
     filtrer_toussaint = Filter(Description="=='Vacances de la Toussaint'", Debut=">='2020-01-01'")
     dates_toussaint = filtrer_toussaint.apply(donnees_vacances)
@@ -65,4 +69,6 @@ if __name__ == '__main__':
     num_rea = AsNumeric('incid_rea')
     somme_rea = Sum('incid_rea')
     answer_q5 = Pipeline(num_rea, filtrer_sem_apres_toussaint, somme_rea)
-    print(answer_q5.apply(hospit_nouveaux)['incid_rea_Sum', 0])  # Réponse attendue : 3521
+    print(answer_q5.apply(hospit_nouveaux)['incid_rea_Sum', 0],
+          "nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant "
+          "les vacances de la Toussaint de 2020.")  # Réponse attendue : 3521
